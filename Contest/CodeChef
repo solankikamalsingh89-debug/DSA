@@ -1,0 +1,48 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef{
+	public static void main (String[] args) throws java.lang.Exception{
+        //07/01/2026
+        front_back_matching();
+        movie_hype();
+        
+	}
+
+    public static void front_back_matching(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            String z=s.next();
+            boolean q[]=new boolean[26];
+            boolean ans=false;
+            for(int i=0;i<n;i++){
+                if(q[z.charAt(i)-'a']) {
+                    ans=true;
+                    break;
+                }
+                q[z.charAt(i)-'a']=true;
+            }
+            if(ans) System.out.println("Yes");
+            else System.out.println("No");
+        }
+    }
+    public static void movie_hype(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int ans=100;
+            int bf=s.nextInt();
+            for(int i=1;i<=n;i++){
+                int af=s.nextInt();
+                int y=Math.max(bf,af);
+                if(y<ans)ans=y;
+                bf=af;
+            }
+            System.out.println(ans);
+        }
+    }
+}
