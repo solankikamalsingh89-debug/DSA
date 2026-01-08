@@ -1,0 +1,79 @@
+import java.util.*;
+public class contest{
+    public static void main(String[] args) {
+        //07/01/2026
+        Binary_Array_Game(); //A
+        Yet_Another_MEX_Problem(); //B
+        War_Strategy(); //C 
+    }
+
+    public static void Binary_Array_Game() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            boolean ans=false;
+            if(s.nextInt()==1) ans=true;
+            while(n-->2){
+                s.nextInt();
+            }
+            if(s.nextInt()==1 || ans) System.out.println("Alice");
+            else System.out.println("Bob");
+        }
+    }
+
+    public static void Yet_Another_MEX_Problem() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int k=s.nextInt();
+            boolean w[]=new boolean[k];
+            for(int i=0;i<n;i++){
+                int q=s.nextInt();
+                if(q<k) w[q]=true;
+            }
+            int i=0;
+            for(;i<k;i++){
+                if(!w[i]) break;
+            }
+            System.out.println(Math.min(k-1,i));
+        }
+    }
+
+    public static void War_Strategy() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int m=s.nextInt();
+            int k=s.nextInt();
+            //dono side same bhrre jaaye ye leke chlo, uss hisabb s hisab lgao--> aage agr n bhrne h 2n-already days lgenge, already=n
+            //min(w) wli side days=2w-1,then max(k)=2k-w --> 2k+w-1<=m h toh all
+            //min(w) poora + bde wale m k(>w) -->k+w+1 mein honge
+            //yaa dono side barabar(k)-->m-(3k-1)<2
+            int bdi=n-k;
+            int cht=k-1;
+            if(bdi<cht){
+                int l=bdi;
+                bdi=cht;
+                cht=l;
+            }
+            if(2*(bdi)+cht-1<=m) System.out.println(n);
+            else{
+                System.out.println(h_War_Strategy(m,cht,bdi)+1);//isme ye bhi ho skta h ki vo min s uper nikal jaaye
+            }
+        }
+    }
+    public static int h_War_Strateg(int m, int cht, int  bdi){
+        int k=(int)((m+1)/3);
+        if (k>cht){ //ye hoga jb min full wala case aayega
+            int l=(m-(2*cht-1));//rem days for bigger 2*o-cht<=m--> o<=m+cht/2
+            int o=(int)((l+cht)/2);
+            return cht+Math.min(bdi,o);
+        }
+        if(m-(3*k-1)>1) return 2*k+1;
+        return 2*k;
+    }
+
+}
