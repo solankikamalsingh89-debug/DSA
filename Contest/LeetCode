@@ -6,3 +6,78 @@ class Solution {
         return s.substring(0,i+1);
     }
 }
+
+
+//11/01/2026 (1Easy+2Medium)
+//Count Residue Prefixes
+class Solution {
+    public int residuePrefixes(String s) {
+        int c=0;
+        HashSet<Character> a=new HashSet<>();
+        for(int i=1;i<=s.length();i++){
+            a.add(s.charAt(i-1));
+            if(a.size()==i%3)c++;
+        }
+        return c;
+    }
+}
+
+//Number of Centered Subarrays
+class Solution {
+    public int centeredSubarrays(int[] nums) {
+        int n=nums.length;
+        HashMap<Integer,Integer> k=new HashMap<>();
+        int ans=n;
+        long s=0;
+        for(int i=0;i<n;i++){
+            s=nums[i];
+            k.put(nums[i],1);
+            for(int j=i+1;j<n;j++){
+                k.put(nums[j],k.getOrDefault(nums[j],0)+1);
+                s+=nums[j];
+                if(s<=100000 && s>=-100000) if(k.containsKey((int)s)) ans++;
+            }
+            k.clear();
+        }
+        return ans;
+    }
+}
+
+//Count Caesar Cipher Pairs
+class Solution {
+    public long countPairs(String[] words) {
+        int l=words.length;
+        int m=words[0].length();
+        boolean check[]=new boolean[l];
+        long ans=0;
+        for(int i=0;i<l;i++){
+            if(check[i]) continue;
+            long n=1;
+            for(int j=i+1;j<l;j++){
+                if(!check[j]){
+                    if(follow(words[i],words[j],m)){
+                        n++;
+                        check[j]=true;
+                    }
+                }
+            }
+            ans+=((n*(n-1))/2);
+        }
+        return ans;
+    }
+    public boolean follow(String a,String b,int m){
+        int t=(a.charAt(0)-b.charAt(0)+26)%26;
+        
+        for(int i=1;i<m;i++){
+            //if((a.charAt(i)-b.charAt(i)+26)%26!=t) return false;
+            if(b.charAt(i)+t>'z') {
+                if(a.charAt(i)!=b.charAt(i)+t-26) return false;
+            }
+            else{
+                if(b.charAt(i)+t!=a.charAt(i)) return false;
+            }
+            //if(a.charAt(i)+!=t) return false;
+        }
+        return true;
+    }
+}
