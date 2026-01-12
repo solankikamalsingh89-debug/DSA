@@ -21,7 +21,7 @@ public class Sorting {
     //Bubble Sort(+Optimiseb by if no swap-->sorted,break  --> can also do with selection sort)
     public void bubbleSort(int[] arr) {
         int n=arr.length;
-        for(int i=n-1;i>0;i--){
+        for(int i=n-1;i>0;i--){   //Similarly can do it by recursion
             boolean swap=false;
             for(int j=0;j<i;j++){
                 if(arr[j]>arr[j+1]){
@@ -35,8 +35,8 @@ public class Sorting {
         }
     }
 
-    //Selection Sort
-    public void insertionSort(int arr[]) {
+    //Insertion Sort
+    public void insertionSort(int arr[]) {  //Similarly can do it by recursion
         int n=arr.length;
         for(int i=1;i<n;i++){
             int j=i-1;

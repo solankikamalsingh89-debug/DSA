@@ -5,6 +5,11 @@ public class contest{
         Binary_Array_Game(); //A
         Yet_Another_MEX_Problem(); //B
         War_Strategy(); //C 
+
+        //12/01/2026
+        Social_Experiment(); //A
+        Hourglass(); //B
+        Huge_Pile(); //C
     }
 
     public static void Binary_Array_Game() {
@@ -76,4 +81,82 @@ public class contest{
         return 2*k;
     }
 
+
+    public static void Social_Experiment() {
+        Scanner s=new Scanner (System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int x4=n%4;
+            int x6=n%6;
+            if(n<=3) System.out.println(n);
+            else if(x4==0 || x6==0 || x4==2) System.out.println(0);
+            else System.out.println(1);
+            //else if(x4==1) System.out.println();if(x6==5 || x4==3 || x4==1)
+        }
+    }
+
+    public static void Hourglass() {
+        Scanner sc=new Scanner (System.in);
+        int t=sc.nextInt();
+        while(t-->0){
+            int s=sc.nextInt();
+            int k=sc.nextInt();
+            int m=sc.nextInt();
+            if(k==s){
+                System.out.println(k-(m%k));
+            }
+            else if(k<s){
+                int times=m/k;
+                if(times%2==0){
+                    System.out.println(s-(m%k));
+                }
+                else System.out.println(k-(m%k));
+            }
+            else{
+                int r=m%k;
+                if(r>=s) System.out.println(0);
+                else System.out.println(s-r);
+            }
+        }
+    }
+
+    public static void Huge_Pile() {
+        Scanner sc=new Scanner (System.in);
+        int t=sc.nextInt();
+        while(t-->0){
+            int n=sc.nextInt();
+            int k=sc.nextInt();
+            System.out.println(h_Huge_Pile(n,k,0,new HashSet<Integer> ()));
+        }
+    }
+    public static int h_Huge_Pile(int n, int k, int a, HashSet<Integer> o){
+        if(n==k) return a;
+        if(o.contains(n)) return -1;
+        if(n>k){
+            if(n%2==0){
+                int j= h(n/2,k,a+1,o);
+                if(j==-1) {
+                    o.add(n/2);
+                    o.add(n);
+                }
+                return j;
+            }
+            else{
+                int l=h(n/2,k,a+1,o);
+                if(l==-1){
+                    o.add(n/2);
+                    int j= h((n/2)+1,k,a+1,o);
+                    if(j==-1){
+                        o.add((n/2)+1);
+                        o.add(n);
+                    }
+                    return j;
+                }
+                return l;
+            }
+        }
+        o.add(n);
+        return -1;
+    }
 }
