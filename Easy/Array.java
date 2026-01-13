@@ -39,5 +39,32 @@ public class Array {
         return true;
     }
 
-    
+    //Remove Duplicates from Sorted Array
+    public int removeDuplicates(int[] nums) {
+        int k =1;
+        int pr=nums[0];
+        for(int i=1;i<nums.length;i++){
+            if(pr!=nums[i]) nums[k++]=pr=nums[i];
+        }
+        return k;
+    }
+
+    //Rotate Array
+    public void rotate(int[] nums, int k) {//Better SC & TC(if we reverse whole arr then reverse fist k and reverse remaining)
+        int n=nums.length;
+        k%=n;
+        if(n<2*k){ //toh left m n-k times( To reduce memory consumption )
+            k=n-k;
+            int pr[]=new int[k];
+            for(int i=0;i<k;i++) pr[i]=nums[i];
+            for(int i=0;i<n-k;i++) nums[i]=nums[i+k];
+            for(int i=n-k,j=0;i<n;i++,j++) nums[i]=pr[j];
+        }
+        else{
+            int pr[]=new int[k];
+            for(int i=n-k,j=0;i<n;i++) pr[j++]=nums[i];
+            for(int i=n-1;i>=k;i--) nums[i]=nums[i-k];
+            for(int i=0,j=0;i<k;i++,j++) nums[i]=pr[j];
+        }
+    }
 }
