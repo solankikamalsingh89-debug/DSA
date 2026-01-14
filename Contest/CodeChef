@@ -7,7 +7,12 @@ class Codechef{
         //07/01/2026
         front_back_matching();
         movie_hype();
-        
+        //14/01/2026
+        Protein_Diet();
+        Winter_is_Coming();
+        Odd_String();
+        Odd_Operations();
+        Rectangle_Coloring();
 	}
 
     public static void front_back_matching(){
@@ -45,4 +50,122 @@ class Codechef{
             System.out.println(ans);
         }
     }
+
+    public static void Protein_Diet(){
+        Scanner s=new Scanner(System.in);
+        int x=s.nextInt();
+        int y=s.nextInt();
+        if(x>=y) System.out.println("Yes");
+        else System.out.println("No");
+	}
+
+    public static void Winter_is_Coming(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int a=s.nextInt();
+            int b=s.nextInt();
+            boolean w=false;
+            int ans=0;
+            for(int i=0;i<n;i++){
+                int q=s.nextInt();
+                if(w && q>b) {
+                    w=false;
+                }
+                else if((!w) && q<a) {
+                    w=true;
+                    ans++;
+                }
+            }
+            System.out.println(ans);
+        }
+	}
+
+    public static void Odd_String(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            String w=s.next();
+            boolean e=true;
+            int d[]=new int[26];
+            for(int i=0;i<w.length();i++){
+                int l=w.charAt(i)-'a';
+                d[l]++;
+                if(d[l]>2){
+                    e=false;
+                    break;
+                }
+            }
+            if(e) System.out.println("Yes");
+            else System.out.println("No");
+        }
+	}
+
+    public static void Odd_Operations(){
+		Scanner s=new Scanner(System.in);
+		int t=s.nextInt();
+		while(t-->0){
+		    int n=s.nextInt();
+		    if(n%2==1) System.out.println(0);
+		    else if(n/10==0) System.out.println(-1);
+		    else{
+		        boolean odd_found=false;
+		        int f=n%10;
+		        int max_digit=f;
+		        while(n>0){
+		            int r=n%10;
+		            if(n%2==1) {
+		                odd_found=true;
+		                break;
+		            }
+		            if(r>max_digit) max_digit=r;
+		            n/=10;
+		        }
+		        if(odd_found) System.out.println(1);
+		        else{
+		            System.out.println((f/max_digit)+2);
+		        }
+		    }
+		}
+	}
+
+    public static void Rectangle_Coloring(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int l=s.nextInt(), w=s.nextInt(), r=s.nextInt(), g=s.nextInt(), b=s.nextInt();
+            if(l<w){
+                int i=l;
+                l=w;
+                w=i;
+            }
+            if(b>g){
+                int i=b;
+                b=g;
+                g=i;
+            }
+            if(g>r){
+                int i=g;
+                g=r;
+                r=i;
+            }
+            if(dis_Rectangle_Coloring(l,w,r,g,b)) System.out.println(4);
+            else if(r==(2*l+w) || r==(2*w+l) || r==2*l || r==w+l || r==2*w || g==2*w || b==2*w || r==l || r==w || g==l || g==w || b==l || b==w) System.out.println(5);
+            else System.out.println(6);
+        }
+	}
+	public static boolean dis_Rectangle_Coloring(int l,int w,int r,int g,int b){
+	    if(w==b){
+	        if((r==2*l && g==w) || (r==l+w && g==l)) return true;
+	        return false;
+	    }
+	    else if(l==b){
+	        if((r==l && g==2*w) || (r==2*w && g==l) || (r==l+w && g==w)) return true;
+	        return false;
+	    }
+	    else if(b==2*w && r==l && g==l) return true;
+	    return false;
+	}
 }
