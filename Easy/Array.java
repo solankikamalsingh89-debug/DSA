@@ -67,4 +67,43 @@ public class Array {
             for(int i=0,j=0;i<k;i++,j++) nums[i]=pr[j];
         }
     }
+
+    //Move Zeros to end
+    public void moveZeroes(int[] nums) {
+        int j=-1;
+        int n=nums.length;
+        for(int i=0;i<n;i++){
+            if(nums[i]==0){
+                j=i;
+                break;
+            }
+        }
+        if(j==-1) return;
+        for(int i=j+1;i<n;i++){
+            if(nums[i]!=0){
+                nums[j]=nums[i];
+                nums[i]=0;
+                j++;
+            }
+        }
+    }
+
+    //Array Search
+    public int search(int arr[], int x) {
+        for(int i=0;i<arr.length;i++) if(arr[i]==x) return i;
+        return -1;
+    }
+
+    //Union of 2 Sorted Array
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int i=m-1,j=n-1,k=m+n-1;
+        while(i>=0 && j>=0){
+            if(nums1[i]>nums2[j]) nums1[k--]=nums1[i--];
+            else nums1[k--]=nums2[j--];
+        }
+        //while(i>=0) nums1[k--]=nums1[i--]; iske toh isme honge hi so no need
+        while(j>=0) nums1[k--]=nums2[j--];
+    }
+
+    
 }
