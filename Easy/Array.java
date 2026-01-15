@@ -105,5 +105,43 @@ public class Array {
         while(j>=0) nums1[k--]=nums2[j--];
     }
 
+    //Missing Number
+    public int missingNumber(int[] nums) {
+        // int s=(nums.length*(nums.length+1))/2;
+        // for(int i=0;i<nums.length;i++) s-=nums[i];
+        // return s;
+
+        /* OR
+        1 2 3 4 5 (We know XOR(^): a^a=0, a^0=a, and XOR is commutative)
+        1 2   4 5
+        */
+        int xor1=0;
+        for(int i=0;i<nums.length;i++){
+            xor1^=nums[i]^(i+1);
+        }
+        return xor1;
+    }
+
+    //Max Consecutive Ones
+    public int findMaxConsecutiveOnes(int[] nums) {
+        int c1=0, m=0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]==1) c1++;
+            else{
+                if(c1>m) m=c1;
+                c1=0;
+            }
+        }
+        if(c1>m) m=c1; //not taking Math.max()-- as quite difference in TC
+        return m;
+    }
+
+    //Single Number
+    public int singleNumber(int[] nums) {
+        int x=0;
+        for(int i=0;i<nums.length;i++) x^=nums[i];
+        return x;
+    }
+
     
 }
