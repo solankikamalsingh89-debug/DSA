@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Array {
     //Largest Element in Array
@@ -143,5 +144,34 @@ public class Array {
         return x;
     }
 
-    
+    //Longest Subarray with Sum K
+    public int longestSubarray(int[] nums, int a) {
+        HashMap<Integer,Integer> k=new HashMap<>();
+        int sum=0;
+        int ans=0;
+        k.put(0,-1);
+        for(int i=0;i<nums.length;i++){
+            sum+=nums[i];
+            if(!k.containsKey(sum)) k.put(sum,i);
+            if(k.containsKey(sum-a) && i-k.get(sum-a)>ans) ans=i-k.get(sum-a);
+        }
+        return ans;
+    }
+
+    //Two Sum
+    public int[] twoSum(int[] nums, int target) {//Also can do by HashMap
+        int a[][]=new int[nums.length][2];
+        for(int i=0;i<nums.length;i++){
+            a[i][0]=nums[i];
+            a[i][1]=i;
+        }
+        Arrays.sort(a,(c,b) -> Integer.compare(c[0],b[0])); //Sometimes got stuck, can do like this
+        int  i=0, j=nums.length-1;
+        while(i<j){
+            if(target-a[i][0]>a[j][0]) i++;
+            else if(target-a[i][0]<a[j][0]) j--;
+            else return new int[] {a[i][1],a[j][1]};
+        }
+        return new int [] {-1,-1}; //This is how to return arr direct
+    }
 }
