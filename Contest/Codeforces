@@ -10,6 +10,12 @@ public class contest{
         Social_Experiment(); //A
         Hourglass(); //B
         Huge_Pile(); //C
+
+        //18/01/2026 (Div4)
+        Perfect_Root(); //A
+        Prefix_Max(); //B
+        Shifted_MEX(); //C
+        OutOfMemoryError(); //D
     }
 
     public static void Binary_Array_Game() {
@@ -159,4 +165,91 @@ public class contest{
         o.add(n);
         return -1;
     }
+
+    public static void Perfect_Root() {
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        while(t-->0){
+            int n=sc.nextInt();
+            for(int i=1;i<=n;i++){
+                System.out.print(i);
+                System.out.print(" ");
+            }
+ 
+            System.out.println();
+        }
+    }
+
+    public static void Prefix_Max() {
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        while(t-->0){
+            int n=sc.nextInt();
+            int m=0;
+            for(int i=0;i<n;i++){
+                int q=sc.nextInt();
+                if(m<q)m=q;
+            }
+            System.out.println(m*n);
+        }
+    }
+
+    public static void Shifted_MEX() {
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        while(t-->0){
+            int n=sc.nextInt();
+            int q[]=new int[n];
+            for(int i=0;i<n;i++){
+                q[i]=sc.nextInt();
+            }
+            Arrays.sort(q);
+            int m=1;
+            int max=0;
+            int p=q[0];
+            for(int i=1;i<n;i++){
+                if(q[i]==p+1) m++;
+                else if(q[i]==p) continue;
+                else{
+                    max=Math.max(m,max);
+                    m=1;
+                }
+                p=q[i];
+            }
+            System.out.println(Math.max(max,m));
+        }
+    }
+
+    public static void OutOfMemoryError() {
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        while(t-->0){
+            int n=sc.nextInt();
+            int m=sc.nextInt();
+            int h=sc.nextInt();
+            int q[]=new int[n];
+            Stack<Integer> k=new Stack<>();
+            for(int i=0;i<n;i++){
+                q[i]=sc.nextInt();
+            }
+            for(int i=0;i<m;i++){
+                int a=sc.nextInt()-1;
+                int b=sc.nextInt();
+                q[a]+=b;
+                k.push(b);
+                k.push(a);
+                if(q[a]>h) {
+                    while(!k.isEmpty()){
+                        q[k.pop()]-=k.pop();
+                    }
+                }
+            }
+            for(int i=0;i<n;i++){
+                System.out.print(q[i]);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+    }
+
 }
