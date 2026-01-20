@@ -29,4 +29,27 @@ public class Array {
         }
         return e;
     }
+
+    //Max subarray sum , Kadane's Algorithm
+    public int maxSubArray(int[] nums) {
+        int p_m=Integer.MIN_VALUE; //as subarray cann't be -ve so for single -ve element 
+        int m=0;
+        for(int i=0;i<nums.length;i++){
+            if(m<0) m=0;
+            m+=nums[i];
+            p_m=Math.max(p_m,m);
+        }
+        return p_m;
+    }
+
+    //Stock Buy and Sell
+    public int maxProfit(int[] prices) {
+        int bp=prices[0];
+        int p=0;
+        for(int i=1;i<prices.length;i++){
+            if(bp>prices[i]) bp=prices[i];
+            else if(prices[i]-bp>p) p=prices[i]-bp;
+        }
+        return p;
+    }
 }
