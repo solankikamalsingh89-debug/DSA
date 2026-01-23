@@ -16,6 +16,9 @@ public class contest{
         Prefix_Max(); //B
         Shifted_MEX(); //C
         OutOfMemoryError(); //D
+        
+        //23/01/2026 (Div2)
+        Table_with_number(); //A
     }
 
     public static void Binary_Array_Game() {
@@ -252,4 +255,26 @@ public class contest{
         }
     }
 
+    public static void Table_with_number() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int h=s.nextInt();
+            int l=s.nextInt();
+            if(h<l){
+                int o=h;
+                h=l;
+                l=o;
+            }
+            int k=n;
+            int c=0;
+            for(int i=0;i<n;i++){
+                int j=s.nextInt();
+                if(j>h) k--;
+                else if(j<=l) c++;
+            }
+            System.out.println(Math.min((int)k/2,c));
+        }
+    }
 }
