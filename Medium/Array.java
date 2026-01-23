@@ -1,4 +1,5 @@
 package Medium;
+import java.util.*;
 public class Array {
     //Sort array of 0,1,2
     public void sortColors(int[] nums) { // Dutch National Flag algorithm
@@ -107,5 +108,18 @@ public class Array {
                 nums[nums.length-j]=t;
             }
         }
+    }
+
+    //Array Leader
+    public ArrayList<Integer> leaders(int arr[]) {
+        ArrayList<Integer> a=new ArrayList<>();
+        int h=0;
+        for(int i=arr.length-1;i>=0;i--){
+            if(h<=arr[i]){
+                a.add(0,arr[i]);
+                h=arr[i];
+            }
+        }
+        return a;
     }
 }
