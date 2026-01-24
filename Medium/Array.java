@@ -122,4 +122,58 @@ public class Array {
         }
         return a;
     }
+
+    //Longest Consecutive Sequence
+    public int longestConsecutive(int[] nums) { //O(n)(as we are at least checking it to go it into or not so going like O(n^2)) h ye but if doing it with O(n log n)(sorting) takes less time as well as memory
+        if(nums.length==0) return 0;
+        Set <Integer> k=new HashSet<>();
+        for(int i=nums.length-1;i>=0;i--){
+            k.add(nums[i]);
+        }
+        int mx=1;
+        for(int i:k){
+            int cnt=1;
+            if(!k.contains(i-1)){
+                while(k.contains(i+1)){
+                    i++;cnt++;
+                }
+                mx=Math.max(mx,cnt);
+            }
+        }
+        return mx;
+    }
+
+    //Set Matrix Zero
+    public void setZeroes(int[][] matrix) {
+        boolean fr=false;
+        boolean fc=false;
+        for(int i=0;i<matrix.length;i++){
+            for(int j=0;j<matrix[0].length;j++){
+                if(matrix[i][j]==0){
+                    if(i==0) fr=true;
+                    if(j==0) fc=true;
+                    else if (i!=0){
+                        matrix[0][j]=0;
+                        matrix[i][0]=0;
+                    }
+                }
+            }
+        }
+        for(int i=1;i<matrix.length;i++){
+            if(matrix[i][0]==0){
+                for(int j=1;j<matrix[0].length;j++) matrix[i][j]=0;
+            }
+        }
+        for(int i=1;i<matrix[0].length;i++){
+            if(matrix[0][i]==0){
+                for(int j=1;j<matrix.length;j++) matrix[j][i]=0;
+            }
+        }
+        if(fr){
+            for (int i=0;i<matrix[0].length;i++) matrix[0][i]=0;
+        }
+        if(fc){
+            for (int i=0;i<matrix.length;i++) matrix[i][0]=0;
+        }
+    }
 }
