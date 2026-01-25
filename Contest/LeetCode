@@ -81,3 +81,70 @@ class Solution {
         return true;
     }
 }
+
+//25/01/2026
+//Minimum Prefix Removal to Make Array Strictly Increasing
+public int minimumPrefixLength(int[] nums) {
+    int pr=nums[nums.length-1];
+    for (int i=nums.length-2;i>=0;i--){
+        if(pr<=nums[i]) return i+1;
+        pr=nums[i];
+    }
+    return 0;
+}
+
+//Rotate Non Negative Integers
+public int[] rotateElements(int[] nums, int k) {
+    ArrayList<Integer> a=new ArrayList<>();
+    for(int i=nums.length-1;i>=0;i--){
+        if(nums[i]>=0){
+            a.add(nums[i]);
+        }
+    }
+    if(a.size()==0) return nums;
+    k%=a.size();
+    k=a.size()-k;
+    for(int i=1;i<=k/2;i++){
+        int t=a.get(i-1);
+        a.set(i-1,a.get(k-i));
+        a.set(k-i,t);
+    }
+    for(int i=1;i<=(a.size()-k)/2;i++){
+        int t=a.get(k+i-1);
+        a.set(k+i-1,a.get(a.size()-i));
+        a.set(a.size()-i,t);
+    }
+    int j=0;
+    for(int i=0;i<nums.length;i++){
+        if(nums[i]>=0){
+            nums[i]=a.get(j);
+            j++;
+        }
+    }
+    return nums;
+}
+
+//Find Nth Smallest Integer With K One Bits
+public long nthSmallest(long n, int k) {
+    return p(n,k,0);
+}
+private long p(long n, long k, long ans){
+    if(n==1) return ans+(long)Math.pow(2,k)-1;
+    n--;
+    long nzero=1, pr=0;
+    while(true){
+        pr=ncr(nzero+k-1,Math.max(k-1,nzero));
+        n-=pr;
+        if(n>0) nzero++;
+        else if(n==0) return ans+(long)(Math.pow(2,k+nzero)-Math.pow(2,nzero));
+        else break;
+    }
+    return p(n+pr,k-1,ans+(long)Math.pow(2,k+nzero-1));
+}
+private long ncr(long n,long r){
+    long ans = 1;
+    for (int i = 1; i <= r; i++) {
+        ans = ans * (n - i + 1) / i;
+    }
+    return ans;
+}
