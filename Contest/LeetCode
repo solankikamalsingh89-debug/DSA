@@ -148,3 +148,48 @@ private long ncr(long n,long r){
     }
     return ans;
 }
+
+//08/02/2026
+//Count Dominant Species
+class Solution{
+    public int dominantIndices(int[] nums) {
+        int sum=0;
+        int ans=0;
+        for(int i=1;i<nums.length;i++){
+            sum+=nums[nums.length-i];
+            if(sum<i*nums[nums.length-i-1]) ans++;
+        }
+        return ans;
+    }
+}
+
+//Merge Adjacent Equal Elements
+class Solution {
+    public List<Long> mergeAdjacent(int[] nums) {
+        List<Long> a=new ArrayList<>();
+        a.add((long)nums[0]);
+        long nxt=0;
+        if (nums.length>1) nxt=nums[1];
+        // for(int i=1;i<nums.length-1;i++){
+        int i=1;
+        while(i<nums.length){
+            if(a.size()==0) {
+                a.add(nxt);
+                i++;
+                if(i==nums.length) break;
+                nxt=nums[i];
+            }
+            else if(a.getLast()==nxt){
+                a.removeLast();
+                nxt*=2;
+            }
+            else{
+                a.add(nxt);
+                if(i==nums.length-1) break;
+                nxt=nums[i+1];
+                i++;
+            }
+        }
+        return a;
+    }
+}
