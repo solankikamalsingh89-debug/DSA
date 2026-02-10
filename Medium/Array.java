@@ -176,4 +176,51 @@ public class Array {
             for (int i=0;i<matrix.length;i++) matrix[i][0]=0;
         }
     }
+
+    //Rotate image by 90 degree
+    public void rotate1(int[][] matrix) {
+        int n=matrix.length;
+        int p=0;
+        while(n-(2*p)>1){
+            int [] a=new int[n-(2*p)];
+            for(int i=0;i<n-(2*p);i++){
+                a[i]=matrix[p][p+i];
+            }
+            for(int i=0;i<n-(2*p)-1;i++){
+                matrix[p][p+i]=matrix[n-p-i-1][p];
+            }
+            for(int i=0;i<n-(2*p)-1;i++){
+                matrix[n-p-i-1][p]=matrix[n-p-1][n-p-1-i];
+            }
+            for(int i=0;i<n-(2*p)-1;i++){
+                matrix[n-p-1][n-p-1-i]=matrix[p+i][n-p-1];
+            }
+            for(int i=0;i<n-(2*p);i++){
+                matrix[p+i][n-p-1]=a[i];
+            }
+            p++;
+        }
+    }
+
+    //or
+    public void rotate2(int[][] matrix) {
+        int n=matrix.length;
+        //Transpose matrix
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                int t=matrix[i][j];
+                matrix[i][j]=matrix[j][i];
+                matrix[j][i]=t;
+            }
+        }
+        //Reverse each row elements
+        for(int i=0;i<n;i++){
+            for(int j=1;j<=n/2;j++){
+                int t=matrix[i][j-1];
+                matrix[i][j-1]=matrix[i][n-j];
+                matrix[i][n-j]=t;
+            }
+        }
+    }
+
 }
