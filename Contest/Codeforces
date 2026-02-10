@@ -19,6 +19,10 @@ public class contest{
         
         //23/01/2026 (Div2)
         Table_with_number(); //A
+
+        //08/02/2026 (Div2)
+        Lawn_Mower(); //A
+        Table_Cut(); //D(done after contest)
     }
 
     public static void Binary_Array_Game() {
@@ -275,6 +279,70 @@ public class contest{
                 else if(j<=l) c++;
             }
             System.out.println(Math.min((int)k/2,c));
+        }
+    }
+
+    public static void Lawn_Mower() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int w=s.nextInt();
+            System.out.println(n-(n/w));
+        }
+    }
+
+    public static void Table_Cut() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int m=s.nextInt();
+            long s1=0;
+            int gp[][]=new int[n][m]; //0(R), 1(D)--will contain isse jrurat wali side kitne h
+            for(int i=0;i<n;i++){
+                for(int j=0;j<m;j++){
+                    if(s.nextInt()==1){
+                        s1++;
+                        gp[i][j]=1;
+                    }
+                    else{
+                        gp[i][j]=0;
+                    }
+                }
+            }
+            for(int i=0;i<n;i++){ //0
+                for(int j=m-2;j>=0;j--){
+                    gp[i][j]+=gp[i][j+1];
+                }
+            }
+            System.out.println(((s1+1)/2)*(s1/2));
+            int dn=0,r=0,d=0;
+            boolean p=true;
+            for(;d<n && p;d++){
+                if(gp[d][r]==(s1/2)-dn || gp[d][r]==((s1+1)/2)-dn){ //Case when all right chle jaao then down
+                    System.out.print("D");
+                    d++;
+                    break;
+                }
+                else if(gp[d][r]<((s1+1)/2)-dn){ //Agee ki column pr chlo
+                    dn+=gp[d][r];
+                    System.out.print("D");
+                }
+                else{ //jb down leke rgt chahiye
+                    for(;r<m;r++){
+                        if(gp[d][r]==((s1+1)/2)-dn){
+                            System.out.print("D");
+                            p=false;
+                            break;
+                        }
+                        System.out.print("R");
+                    }
+                }
+            }
+            for(;r<m;r++) System.out.print("R");
+            for(;d<n;d++) System.out.print("D");
+            System.out.println();
         }
     }
 }
