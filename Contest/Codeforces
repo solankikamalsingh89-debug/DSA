@@ -23,6 +23,9 @@ public class contest{
         //08/02/2026 (Div2)
         Lawn_Mower(); //A
         Table_Cut(); //D(done after contest)
+
+        //11/0212026 (Div2)
+        friendly_numbers(); //A
     }
 
     public static void Binary_Array_Game() {
@@ -344,5 +347,48 @@ public class contest{
             for(;d<n;d++) System.out.print("D");
             System.out.println();
         }
+    }
+
+    public static void friendly_numbers() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int p=s.nextInt();
+            if(p%9==0){
+                int x=(p+d(p))/10;
+                if(l(x*10,p)) System.out.println(10);
+                else System.out.println(0);
+            } 
+            else System.out.println(0);
+        }
+    }
+    private static boolean l(int x,int p){
+        // x-=d(x);
+        int y=d(x);
+        if(x-y>p){
+            while(x-y>=p){
+                if(x-y==p) return true;
+                x-=10;
+                y=d(x);
+            }
+            return false;
+        }
+        else if(x-y==p) return true;
+        else{
+            while(x-y<=p){
+                if(x-y==p) return true;
+                x+=10;
+                y=d(x);
+            }
+            return false;
+        }
+    }
+    private static int d(int x){
+        int h=0;
+        while(x>0){
+            h+=(x%10);
+            x/=10;
+        }
+        return h;
     }
 }
