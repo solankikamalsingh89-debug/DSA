@@ -223,4 +223,48 @@ public class Array {
         }
     }
 
+    //Spiral Matrix
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> a=new ArrayList<>();
+        int i=0,j=0;
+        int l=1, d=1;
+        boolean hor=true;
+        while(true){
+            if(i<0 || j<0 || i>=matrix.length || j>=matrix[0].length || matrix[i][j]==101){
+                if(hor){
+                    l*=-1;
+                    j+=l;
+                    i+=d;
+                }
+                else{
+                    d*=-1;
+                    j+=l;
+                    i+=d;
+                }
+                if(i<0 || j<0 || i>=matrix.length || j>=matrix[0].length || matrix[i][j]==101) break;
+                hor=!hor;
+            } 
+            a.add(matrix[i][j]);   
+            matrix[i][j]=101;
+            if(hor) j+=l;
+            else i+=d;
+        }
+        return a;
+    }
+
+    //Subarray Sum Equals K
+    public int subarraySum(int[] nums, int k) {
+        HashMap<Integer,Integer>a=new HashMap<>();
+        a.put(0,1);
+        int sum=0;
+        int res=0;
+        for(int i:nums){
+            sum+=i;
+            if(a.containsKey(sum-k)){
+                res+=a.get(sum-k);
+            }
+            a.put(sum,a.getOrDefault(sum,0)+1);
+        }
+        return res;
+    }
 }
