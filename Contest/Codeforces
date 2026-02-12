@@ -26,6 +26,10 @@ public class contest{
 
         //11/0212026 (Div2)
         friendly_numbers(); //A
+        Array_and_permutation(); //B
+        Game_with_a_fraction(); //C
+        Another_Problem_about_Beautiful_Pairs(); //D(After contest)
+        
     }
 
     public static void Binary_Array_Game() {
@@ -362,7 +366,7 @@ public class contest{
             else System.out.println(0);
         }
     }
-    private static boolean l(int x,int p){
+    private static boolean l_friendly_numbers(int x,int p){
         // x-=d(x);
         int y=d(x);
         if(x-y>p){
@@ -383,12 +387,68 @@ public class contest{
             return false;
         }
     }
-    private static int d(int x){
+    private static int d_friendly_numbers(int x){
         int h=0;
         while(x>0){
             h+=(x%10);
             x/=10;
         }
         return h;
+    }
+
+    public static void Array_and_permutation() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int a[]=new int[n];
+            for(int i=0;i<n;i++){
+                a[i]=s.nextInt();
+            }
+            int j=0;
+            for(int i=0;i<n;i++){
+                int q=s.nextInt();
+                while(j<n){
+                    if(a[j]!=q) j++;
+                    else break;
+                }
+            }
+            if(j==n) System.out.println("NO");
+            else System.out.println("YES");
+        }
+    }
+
+    public static void Game_with_a_fraction() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            long p=s.nextLong();
+            long q=s.nextLong();
+            if(q>p && q-p<=p/2){
+                System.out.println("Bob");
+            }
+            else System.out.println("Alice");
+        }
+    }
+
+    public static void Another_Problem_about_Beautiful_Pairs() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            long a[]=new long[n];
+            int cnt=0;
+            for(int i=0;i<n;i++){
+                a[i]=s.nextLong();
+            }
+            for(long i=0;i<n;i++){
+                for(long j=1;j<=a[(int)i] && j<n;j++){
+                    if(i+j*a[(int)i]>=n && i-j*a[(int)i]<0) break;
+                    if(i+j*a[(int)i]<n && a[(int)(i+j*a[(int)i])]==j) cnt++;
+                    if(i-j*a[(int)i]>=0 && a[(int)(i-j*a[(int)i])]==j && a[(int)i]!=a[(int)(i-j*a[(int)i])]) cnt++;
+                }
+            }
+            System.out.println(cnt);
+        }
     }
 }
