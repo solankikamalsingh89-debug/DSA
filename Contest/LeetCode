@@ -192,4 +192,83 @@ class Solution {
         }
         return a;
     }
+
+    //14/02/2026
+    //Weighted Word Mapping
+    public String mapWordWeights(String[] words, int[] weights) {
+        String ans="";
+        for(int i=0;i<words.length;i++){
+            int q=0;
+            for(int j=0;j<words[i].length();j++){
+                q+=(weights[words[i].charAt(j)-'a']);
+            }
+            ans+=(char)('z'-q%26);
+        }
+        return ans;
+    }
+
+    //Number of Prefix Connected Groups
+    class Node{
+        Node[] c;
+        int j;
+        public Node(){
+            c=new Node[26];
+            for(int i=0;i<26;i++){
+                c[i]=null;
+            }
+            j=-1;
+        }
+    }
+    public Node root=new Node();
+    public int prefixConnected(String[] words, int k) {
+        int ans=0;
+        for(int l=0;l<words.length;l++){
+            Node cur=root;
+            String word=words[l];
+            if(word.length()<k) continue;
+            for(int i=0;i<word.length() && i<k;i++){
+                int id=word.charAt(i)-'a';
+                if(cur.c[id]==null){
+                    cur.c[id]=new Node();
+                }
+                else if(i==k-1 && cur.c[id].j==-1){
+                    cur.c[id].j=0;
+                    ans++;
+                }
+                cur=cur.c[id];
+            }
+        }
+        return ans;
+    }
+
+    //House Robber V
+
+    public long rob(int[] nums, int[] colors) {
+        int n=colors.length;
+        long ans=0;
+        long i1=0,i2=0;
+        for(int i=0;i<n-1;i++){
+            if(colors[i]==colors[i+1]){
+                if(i%2==0) i1+=nums[i];
+                else i2+=nums[i];
+            }
+            else if (i1!=0 || i2!=0){
+                if(i%2==0) i1+=nums[i];
+                else i2+=nums[i];
+                ans+=Math.max(i1,i2);
+                i1=0;
+                i2=0;
+            }
+            else{
+                ans+=nums[i];
+            }
+        }
+        if(i1!=0 || 12!=0){
+            if((n-1)%2==0) i1+=nums[n-1];
+            else i2+=nums[n-1];
+            ans+=Math.max(i1,i2);
+        }
+        else ans+=nums[n-1];
+        return ans;
+    }
 }
