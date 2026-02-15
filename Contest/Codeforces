@@ -29,6 +29,11 @@ public class contest{
         Array_and_permutation(); //B
         Game_with_a_fraction(); //C
         Another_Problem_about_Beautiful_Pairs(); //D(After contest)
+
+        //15/02/2026 (Div3)
+        Sieve_of_Erato67henes(); //A
+        Heapify_1(); //B
+        Dice_Roll_Sequence(); //C
         
     }
 
@@ -449,6 +454,85 @@ public class contest{
                 }
             }
             System.out.println(cnt);
+        }
+    }
+
+    public static void Sieve_of_Erato67henes(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            boolean b1=false;
+            while(n-->0){
+                int q=s.nextInt();
+                if(q==67) b1=true;
+            }
+            if(b1) System.out.println("Yes");
+            else System.out.println("No");
+        }
+    }
+
+    public static void Heapify_1(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int a[]=new int[n];
+            boolean ans=true;
+            // ArrayList<Integer> b=new ArrayList<>();
+            for(int i=0;i<n;i++){
+                a[i]=s.nextInt();
+                if(!ans) continue;
+                if(a[i]<i+1){
+                    if((i+1)%a[i]!=0) ans=false;
+                    else{
+                        int q=(i+1)/a[i];
+                        while(q>1){
+                            if(q%2==1){
+                                ans=false;
+                                break;
+                            }
+                            q/=2;
+                        }
+                    }
+                }
+                else if(a[i]>i+1){
+                    if(a[i]%(i+1)!=0) ans=false;
+                    else{
+                        int q=a[i]/(i+1);
+                        while(q>1){
+                            if(q%2==1){
+                                ans=false;
+                                break;
+                            }
+                            q/=2;
+                        }
+                    }
+                }
+            }
+            if(ans) System.out.println("YES");
+            else System.out.println("NO");
+        }
+    }
+
+    public static void Dice_Roll_Sequence(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int pr=s.nextInt();
+            int ans=0;
+            boolean skip=false;
+            while(n-->1){
+                int q=s.nextInt();
+                if(skip) skip=false;
+                else if(pr+q==7 || pr==q){
+                    ans++;
+                    skip=true;
+                }
+                pr=q;
+            }
+            System.out.println(ans);
         }
     }
 }
