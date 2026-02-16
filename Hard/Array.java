@@ -36,4 +36,26 @@ public class Array {
 
         return a; 
     }
+
+    //3 Sum
+    public List<List<Integer>> threeSum(int[] nums) { //Get time complexity limit exceed
+        Set<List<Integer>> ans=new HashSet<>();
+        for(int i=0;i<nums.length;i++){
+            Set<Integer> a=new HashSet<>();
+            for(int j=i+1;j<nums.length;j++){
+                int t3=-(nums[i]+nums[j]);
+                if(a.contains(t3)){
+                    List<Integer> t=Arrays.asList(nums[i],nums[j],t3);
+                    Collections.sort(t);
+                    ans.add(t);
+                }
+                a.add(nums[j]);
+            }
+        }
+        List<List<Integer>> s=new ArrayList<>();
+        for (List<Integer> a1:ans){
+            s.add(a1);
+        }
+        return s;
+    }
 }
