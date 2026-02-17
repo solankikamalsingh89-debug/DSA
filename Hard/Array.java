@@ -58,4 +58,85 @@ public class Array {
         }
         return s;
     }
+    //or
+    public List<List<Integer>> threeSum1(int[] nums) { //Learned how complexity was improved to O(n^2) by double pointers moving according to condition and one is iterating for third element
+        List<List<Integer>> s=new ArrayList<>();
+        Arrays.sort(nums);
+        for(int i=0;i<nums.length;i++){
+            if(i>0 && nums[i]==nums[i-1]) continue;
+            int l=i+1;
+            int r=nums.length-1;
+            while(l<r){
+                int sum=nums[i]+nums[l]+nums[r];
+                if(sum==0){
+                    s.add(Arrays.asList(nums[i],nums[l],nums[r]));
+                    l++;
+                    r--;
+                    while(l<r && nums[l]==nums[l-1]) l++;
+                    while(l<r && nums[r]==nums[r+1]) r--;
+                }
+                else if(sum>0){
+                    r--;
+                }
+                else{
+                    l++;
+
+                }
+            }
+        }
+        return s;
+    }
+
+    //4 sum
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        Arrays.sort(nums);
+        int n=nums.length;
+        List<List<Integer>> lst=new ArrayList<>();
+        for(int i=0;i<n-3;i++){
+            if(i>0 && nums[i]==nums[i-1]) continue;
+            for(int j=i+1;j<n-2;j++){
+                if(j>i+1 && nums[j]==nums[j-1]) continue;
+                int left=j+1;
+                int right=n-1;
+                while(left<right){
+                    long sum=(long)nums[i]+nums[j]+nums[left]+nums[right];
+                    if(sum<target){
+                        left++;
+                    }else if(sum>target){
+                        right--;
+                    }else{
+                        lst.add(Arrays.asList(nums[i],nums[j],nums[left],nums[right]));
+                        left++;
+                        right--;
+                        while(left<right && nums[left]==nums[left-1]){
+                            left++;
+                        }
+                        while(right>left && nums[right]==nums[right+1]){
+                            right--;
+                        }
+                    }
+                }
+            }
+        }
+        return lst;
+    }
+
+    //Max length of the subarray with sum 0
+    public int maxLength(int arr[]) { //Prefix array then traverse it with storing every new sum with idx to search if it appears again means sum between them 0
+        HashMap<Integer,Integer> a=new HashMap<>();
+        int ans=0;
+        a.put(0,0);
+        if(arr[0]==0){
+            ans=1;
+        }
+        else a.put(arr[0],1);
+        for(int i=1;i<arr.length;i++){
+            arr[i]+=arr[i-1];
+            if(a.containsKey(arr[i])){
+                ans=Math.max(ans,i+1-a.get(arr[i]));
+            }
+            else a.put(arr[i],i+1);
+        }
+        return ans;
+    }
 }
