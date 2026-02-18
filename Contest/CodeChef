@@ -13,6 +13,10 @@ class Codechef{
         Odd_String();
         Odd_Operations();
         Rectangle_Coloring();
+        //18/02/2026
+        IceCream_Cones();
+        Sub_A_Add_B();
+        Minimum_Distinct();
 	}
 
     public static void front_back_matching(){
@@ -168,4 +172,68 @@ class Codechef{
 	    else if(b==2*w && r==l && g==l) return true;
 	    return false;
 	}
+
+    public static void IceCream_Cones ()
+	{
+        Scanner s=new Scanner (System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int x=s.nextInt();
+            int y=s.nextInt();
+            int n=s.nextInt();
+            System.out.println(Math.max(0,x-(y*n)));
+        }
+	}
+
+    public static void Sub_A_Add_B()
+	{
+		Scanner s=new Scanner(System.in);
+		int t=s.nextInt();
+		while(t-->0){
+		    int n=s.nextInt();
+		    int a=s.nextInt();
+		    int b=a-s.nextInt();
+		    while(n>=a){
+		        n-=b;
+		    }
+		    System.out.println(n);
+		}
+	}
+
+    public static void Minimum_Distinct()
+	{
+        Scanner s=new Scanner (System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int k=s.nextInt();
+            int a=s.nextInt();
+            int w[][]=new int[n][2];
+            int j=0;
+            HashMap<Integer,Integer> p=new HashMap<>();
+            for(int i=1;i<n;i++){
+                int q=s.nextInt();
+                if(q!=a){
+                    if(p.containsKey(q)){
+                        w[p.get(q)][1]++;
+                    }
+                    else{
+                        p.put(q,j);
+                        w[j][0]=q;
+                        w[j][1]=1;
+                        j++;
+                    }
+                }
+            }
+            Arrays.sort(w, (a1, b1) -> Integer.compare(a1[1], b1[1]));
+            int ans=j+1;
+            j=n-j;
+            while(k>0 && ans>1){
+                k-=w[j][1];
+                j++;
+                if(k>=0) ans--;
+            }
+            System.out.println(ans);
+        }
+    }
 }
