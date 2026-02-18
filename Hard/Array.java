@@ -139,4 +139,20 @@ public class Array {
         }
         return ans;
     }
+
+    //Count subarrays with given xor K
+    public long subarrayXor(int arr[], int k) {
+        HashMap<Integer,Integer> a=new HashMap<>();
+        a.put(0,1);
+        int pf=0;
+        int ans=0;
+        for(int i=0;i<arr.length;i++){
+            pf^=arr[i];
+            ans+=a.getOrDefault(pf^k,0);
+            a.put(pf,a.getOrDefault(pf,0)+1);
+        }
+        return ans;
+    }
+
+    
 }
