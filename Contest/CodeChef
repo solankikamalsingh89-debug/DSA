@@ -13,10 +13,11 @@ class Codechef{
         Odd_String();
         Odd_Operations();
         Rectangle_Coloring();
-        //18/02/2026
-        IceCream_Cones();
-        Sub_A_Add_B();
-        Minimum_Distinct();
+        //18/02/2026 (Div2)
+        IceCream_Cones(); //1
+        Sub_A_Add_B(); //2
+        Minimum_Distinct(); //3
+        Max_Minus_Min(); //4(Done later)
 	}
 
     public static void front_back_matching(){
@@ -236,4 +237,39 @@ class Codechef{
             System.out.println(ans);
         }
     }
+
+    public static void Max_Minus_Min()
+	{
+        Scanner s=new Scanner (System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            ArrayList<Integer> a=new ArrayList<>();
+            int m=0;
+            for(int i=0;i<n;i++){
+                int q=s.nextInt();
+                a.add(q);
+                m=Math.max(q,m);
+            }
+            for(int i=0;i<n;i++){
+                int p=a.get(i);
+                while(p<=m){
+                    p*=2;
+                }
+                a.set(i,p/2);
+            }
+            Collections.sort(a);
+            m=a.get(n-1)-a.get(0);
+            if(m==0) System.out.println(0);
+            else{
+                int h=n;
+                while(h-->0){
+                    a.add(a.get(0)*2);
+                    a.remove(0);
+                    m=Math.min(m,a.get(n-1)-a.get(0));
+                }
+                System.out.println(m);
+            }
+        }
+	}
 }
