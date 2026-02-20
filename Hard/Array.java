@@ -154,7 +154,32 @@ public class Array {
         return ans;
     }
 
-    //
+    //Merge Overlapping Subintervals
+    public int[][] merge(int[][] intervals) {
+        List <List<Integer>> a=new ArrayList<>();
+        Arrays.sort(intervals, Comparator.comparingInt(a1 -> a1[0]));
+        int l=intervals[0][0];
+        int h=intervals[0][1];
+        for(int i=1;i<intervals.length;i++){
+            if(intervals[i][0]<=h){
+                h=Math.max(intervals[i][1],h);
+            }
+            else{
+                a.add(Arrays.asList(l,h));
+                l=intervals[i][0];
+                h=intervals[i][1];
+            }
+        }
+        a.add(Arrays.asList(l,h));
+        int [][]b=new int[a.size()][2];
+        for(int i=0;i<a.size();i++){
+            b[i][0]=a.get(i).get(0);
+            b[i][1]=a.get(i).get(1);
+        }
+        return b;
+    }
+
+    //Merge two sorted arrays without extra space
     public void merge(int[] nums1, int m, int[] nums2, int n) {
         int i=m-1,j=n-1,k=m+n-1;
         while(i>=0 && j>=0){
@@ -164,4 +189,22 @@ public class Array {
         //while(i>=0) nums1[k--]=nums1[i--]; iske toh isme honge hi so no need
         while(j>=0) nums1[k--]=nums2[j--];
     }
+
+    //Find Missing and Repeated Values
+    public int[] findMissingAndRepeatedValues(int[][] grid) {
+        long n=grid.length;
+        n*=n;
+        long s1=(n*(n+1))/2;
+        long s2=(n*(n+1)*(2*n+1))/6;
+        for(int i[]:grid){
+            for(int j:i){
+                s1-=j;
+                s2-=j*j;
+            }
+        }
+        s2/=s1;
+        return new int[] {(int)((s2-s1)/2),(int)((s2+s1)/2)};
+    }
+    //OR
+    
 }
