@@ -286,4 +286,40 @@ class Solution {
         Collections.sort(ans);
         return ans;
     }
+
+    //22/02/2026
+    //Find_the_Score_Difference_in_a_Game
+    public int scoreDifference(int[] nums) {
+        int ans=0;
+        boolean f1=true;
+        for(int i=1;i<=nums.length;i++){
+            if(i%6==0) f1=!f1;
+            if(nums[i-1]%2==1) f1=!f1;
+            if(f1) ans+=nums[i-1];
+            else ans-=nums[i-1];
+        }
+        return ans;
+    }
+
+    //Check Digitorial Permutation
+    public boolean isDigitorialPermutation(int n) {
+        int a[]={1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880};
+        int t=n;
+        int ans=0;
+        int[] w=new int[10];
+        while(t>0){
+            w[t%10]++;
+            ans+=a[t%10];
+            t/=10;
+        }
+        while(ans>0){
+            if(w[ans%10]<=0) return false;
+            w[ans%10]--;
+            ans/=10;
+        }
+        for(int i=0;i<=9;i++){
+            if(w[i]!=0) return false;
+        }
+        return true;
+    }
 }
