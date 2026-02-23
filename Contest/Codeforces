@@ -38,6 +38,10 @@ public class contest{
         //21/02/2026(Div2)
         String_Rotation_Game(); //A
         Flipping_Binary_String(); //B
+
+        //23/02/2026(Div2)
+         ABAB_Construction(); //B
+        Lost_Civilization_Easy_Version(); //C
     }
 
     public static void Binary_Array_Game() {
@@ -606,4 +610,73 @@ public class contest{
             else System.out.println(-1);
         }
 	}
+
+    public static void ABAB_Construction() {
+        Scanner s=new Scanner (System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            String q=s.next();
+            int a=0,b=0;
+            if(n%2==0){
+                b=1;
+                a=1;
+            }
+            else a=2;
+            if(h_ABAB_Construction(a, b, q, 0, n, 0, 0)) System.out.println("YES");
+            else System.out.println("NO");
+        }
+    }
+    private static boolean h_ABAB_Construction(int a,int b,String q,int i,int n, int a0, int b0){
+        if(i==n) return true;
+        if(b<0 || a<0 || b0>(n/2) || a0>(n+1)/2) return false;
+        char c=q.charAt(i);
+        if(c=='?'){
+            if(a>0 && b<=0){
+                return h_ABAB_Construction(a-1,b+1,q,i+1,n,a0+1,b0);
+            }
+            else if(b>0 && a<=0){
+                return h_ABAB_Construction(a+1,b-1,q,i+1,n,a0,b0+1);
+            }
+            if(!h_ABAB_Construction(a-1,b+1,q,i+1,n,a0+1,b0)){
+                if(!h_ABAB_Construction(a+1,b-1,q,i+1,n,a0,b0+1)) return false;
+            }
+            return true;
+        }
+        else if(c=='a'){
+            if(a==0){
+                return false;
+            }
+            return h_ABAB_Construction(a-1,b+1,q,i+1,n,a0+1,b0);
+        }
+        if(b==0){
+            return false;
+        }
+        return h_ABAB_Construction(a+1,b-1,q,i+1,n,a0,b0+1);
+    }
+
+    public static void Lost_Civilization_Easy_Version() {
+        Scanner s=new Scanner (System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            HashSet<Integer> a=new HashSet<>();
+            int pr=s.nextInt();
+            int ans=1;
+            for(int i=1;i<n;i++){
+                int q=s.nextInt();
+                if((!a.contains(q)) && pr!=q-1){
+                    a.clear();
+                    ans++;
+                }
+                else if(q>pr+1){
+                    a.clear();
+                    ans++;
+                }
+                else a.add(q);
+                pr=q;
+            }
+            System.out.println(ans);
+        }
+    }
 }
