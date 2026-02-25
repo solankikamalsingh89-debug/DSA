@@ -40,8 +40,13 @@ public class contest{
         Flipping_Binary_String(); //B
 
         //23/02/2026(Div2)
-         ABAB_Construction(); //B
+        ABAB_Construction(); //B
         Lost_Civilization_Easy_Version(); //C
+
+        //25/02/2026(Div2)
+        Towers_of_Boxes(); //A
+        Beautiful_Numbers(); //B
+
     }
 
     public static void Binary_Array_Game() {
@@ -675,6 +680,55 @@ public class contest{
                 }
                 else a.add(q);
                 pr=q;
+            }
+            System.out.println(ans);
+        }
+    }
+
+    public static void Towers_of_Boxes() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int m=s.nextInt();
+            int l=s.nextInt();
+            //1 row m--> 1+l/m
+            System.out.println((n+(l/m))/(1+l/m));
+        }
+    }
+
+    public static void Beautiful_Numbers() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            long n=s.nextLong();
+            int a[]=new int[19];
+            int j=0;
+            int sum=0;
+            while(n>=10){
+                a[j]=(int)(n%10);
+                sum+=a[j];
+                n/=10;
+                j++;
+            }
+            sum+=n;
+            if(sum<10){
+                System.out.println(0);
+                continue;
+            }
+            sum-=9;
+            int ans=0;
+            Arrays.sort(a);
+            for(int i=19-1;sum>0 && a[i]>0;i--){
+                if(n-1>a[i]){
+                    sum-=(n-1);
+                    n=1;
+                    i++;
+                }
+                else{
+                    sum-=a[i];
+                }
+                ans++;
             }
             System.out.println(ans);
         }
