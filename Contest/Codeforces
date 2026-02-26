@@ -47,6 +47,10 @@ public class contest{
         Towers_of_Boxes(); //A
         Beautiful_Numbers(); //B
 
+        //26/02/2026(Div2)
+        Simons_and_Making_It_Beautiful(); //A
+        Simons_and_Cakes_for_Success(); //B
+
     }
 
     public static void Binary_Array_Game() {
@@ -730,6 +734,60 @@ public class contest{
                 }
                 ans++;
             }
+            System.out.println(ans);
+        }
+    }
+
+    public static void Simons_and_Making_It_Beautiful() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            if(n==1){
+                System.out.println(s.nextInt());
+                continue;
+            }
+            int a[]=new int[n];
+            int m=0;
+            int m_i=0;
+            for(int i=0;i<n;i++){
+                a[i]=s.nextInt();
+                if(a[i]>m){
+                    m=a[i];
+                    m_i=i;
+                }
+            }
+            a[m_i]=a[0];
+            a[0]=m;
+            for(int i:a){
+                System.out.print(i);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void Simons_and_Cakes_for_Success() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            if(n==1) System.out.println(1);
+            int ans=1;
+            int i=2;
+            if(n%i==0){
+                ans*=i;
+                while(n%i==0 && n>1) n/=i;
+            }
+            i++;
+            while(n>1 && i<=Math.sqrt(n)){
+                if(n%i==0){
+                    ans*=i;
+                    while(n%i==0) n/=i;
+                }
+                i+=2;
+            }
+            if(n!=1) ans*=n;
             System.out.println(ans);
         }
     }
