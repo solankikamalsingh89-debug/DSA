@@ -322,4 +322,34 @@ class Solution {
         }
         return true;
     }
+
+    //Trim Trailing Vowels
+    public String trimTrailingVowels(String s) {
+        HashSet<Character>a=new HashSet<>();
+        a.add('a');
+        a.add('e');
+        a.add('i');
+        a.add('o');
+        a.add('u');
+        for(int i=s.length()-1;i>=0;i--){
+            if(!a.contains(s.charAt(i))){
+                return s.substring(0,i+1);
+            }
+        }
+        return "";
+    }
+
+    //Minimum Cost to Split into Ones
+    public int minCost(int n) {
+        int a[]=new int[n+1];
+        return h_minCost(a,n);
+    }
+    private int h_minCost(int a[],int n){
+        if(n==1) return 0;
+        //if(n==2 || n==3) return n;
+        if(a[n]!=0) return a[n];
+        if(n%2==0) a[n]=(2*h_minCost(a,n/2))+(n/2)*(n/2);
+        else a[n]=h_minCost(a,n/2)+h_minCost(a,(n+1)/2)+(n/2)*((n+1)/2);
+        return a[n];
+    }
 }
