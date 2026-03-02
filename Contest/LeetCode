@@ -352,4 +352,35 @@ class Solution {
         else a[n]=h_minCost(a,n/2)+h_minCost(a,(n+1)/2)+(n/2)*((n+1)/2);
         return a[n];
     }
+
+    //Count Subarrays With K Distinct Integers
+    public long countSubarrays(int[] nums, int k, int m) {
+        long ans=0;
+        int leftd=0,leftv=0,vcount=0;
+        HashMap<Integer,Integer>d=new HashMap<>();
+        HashMap<Integer, Integer>v=new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            int c=nums[i];
+            d.put(c,d.getOrDefault(c,0)+1);
+            while(d.size()>k){
+                int t=nums[leftd];
+                if(d.get(t)==1) d.remove(t);
+                else d.put(t,d.get(t)-1);
+                leftd++;
+            }
+            int f=v.getOrDefault(c,0)+1;
+            v.put(c,f);
+            if(f==m) vcount++;
+            while(vcount>=k){
+                int y=nums[leftv];
+                int cy=v.get(y);
+                if(cy==m)vcount--;
+                if(cy==1)v.remove(y);
+                else v.put(y,cy-1);
+                leftv++;
+            }
+            if(leftv>leftd) ans+=(leftv-leftd);
+        }
+        return ans;
+    }
 }
