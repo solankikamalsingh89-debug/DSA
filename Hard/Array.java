@@ -205,6 +205,39 @@ public class Array {
         s2/=s1;
         return new int[] {(int)((s2-s1)/2),(int)((s2+s1)/2)};
     }
-    //OR
-    
+    //OR(XOR Method- Bitwise use to check numbers noth coming in continous range and also xor property of different bits giving 1 to get where digits bits changes)
+    public int[] findMissingAndRepeatedValues1(int[][] grid) { //XOR method
+        //Compute the number of digits
+        int n=grid.length;
+        //Compute Xor of missing and repeated number to get position the first bit(from right) as 1 meaning one have 1 and other have 0 at that bit position
+        int xr=0;
+        int x=1;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                xr^=(x^grid[i][j]);
+                x++;
+            }
+        }
+        int t=xr&(~(xr-1)); //In integer for ex- 100 representing first bit different at 3rd pos
+        //Now find seperately two numbers from bit position(xor of all having bit as 0 and 1 seperately)
+        int zero=0,one=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if((t & grid[i][j])==0) zero^=grid[i][j];
+                else one^=grid[i][j];
+            }
+        }
+        for(int i=1;i<=n*n;i++){
+            if((t&i)==0) zero^=i;
+            else one^=i;
+        }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==zero){
+                    return new int[] {zero,one};
+                }
+            }
+        }
+        return new int[] {one,zero};
+    }
 }
