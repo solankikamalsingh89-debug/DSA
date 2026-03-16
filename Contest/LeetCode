@@ -478,4 +478,92 @@ class Solution {
 
         return Math.min(cost,minCost_solve(l, (l + r) / 2, x, y, prefix) + minCost_solve((l + r) / 2 + 1, r, x, y, prefix));
     }
+
+    //15/03/2026
+    //Count Commas in Range
+    public int countCommas(int n) {
+        if(n<1000) return 0;
+        return n-999;
+    }
+
+    //Count Commas in Range II
+    public long countCommas(long n) {
+        if(n<1000)return 0;
+        else if(n<1000000L) return n-999;
+        else if(n<1000000000L) return (long)(n-999+n-999999);
+        else if(n<1000000000000L) return (long)(n-999+n-999999+n-999999999);
+        else if(n<1000000000000000L) return (long)(n-999+n-999999+n-999999999+n-999999999999L);
+        else return (long)(n-999+n-999999+n-999999999+n-999999999999L+1);
+    }
+
+    //Longest Arithmetic Sequence After Changing At Most One Element
+    public int longestArithmetic(int[] nums) {
+        int n=nums.length;
+        int d=nums[1]-nums[0];
+        int m_l=2;
+        boolean c=false;
+        int r=-1;
+        int m=2;
+        int i=2;
+        for(;i<n;i++){
+            if(d==nums[i]-nums[i-1]){
+                m_l=Math.max(++m,m_l);
+            }
+            else{
+                if((!c) && i+1<n && nums[i+1]-nums[i-1]==(long)(2*d)){
+                    c=true;
+                    r=i+1;
+                    m+=2;
+                    m_l=Math.max(m,m_l);
+                    if(i+2<n && nums[i+2]-nums[i-1]==(long)(3*d)){
+                        i++;    
+                    }
+                    else{
+                        c=false;
+                        m=2;
+                        d=nums[i]-nums[i-1];
+                    }
+                }
+                else{
+                    if(c){
+                        if(i+2<n && nums[i+1]-nums[i-1]==(long)(2*d) && nums[i+2]-nums[i-1]==(long)(3*d)){
+                            m=i-r+2;
+                            r=i+1;
+                            i++;
+                        }
+                        else{
+                            m=2;
+                            d=nums[i]-nums[i-1];
+                            c=false;
+                        }
+                    }
+                    else{
+                        m_l=Math.max(++m,m_l);
+                        if(i-m-1>=0){
+                            if(nums[i-m-1]==(long)(nums[i-m+1]-(long)(2*d))){
+                                m_l=Math.max(++m,m_l);
+                            }
+                        }
+                        m=2;
+                        d=nums[i]-nums[i-1];
+                    }
+                }
+            }
+        }
+        if(!c){
+            if(n-m-2>=0){
+                if(nums[n-m-2]==(long)(nums[n-m]-(long)(2*d))){
+                    m++;
+                    m_l=Math.max(++m,m_l);
+                }
+                else{
+                    m_l=Math.max(++m,m_l);
+                }
+            }
+            else{
+                m_l=Math.max(++m,m_l);
+            }
+        }
+        return Math.min(n,m_l);
+    }
 }
