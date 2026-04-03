@@ -240,4 +240,161 @@ public class Array {
         }
         return new int[] {one,zero};
     }
+
+    //Count Inversion(By merge sort: while setting element from other earlier than prev element add it)
+    static int divide(int arr[], int l, int r){
+        if(l>=r) return 0;
+        int m=l+(r-l)/2;
+        return divide(arr,l,m)+divide(arr,m+1,r)+merge(arr,l,m,r);
+    }
+    static int merge(int arr[], int l, int m, int r){
+        int ans=0;
+        int y=m-l+1;
+        int a1[]=new int[m-l+1];
+        int a2[]=new int[r-m];
+        for(int i=0;i<m-l+1;i++){
+            a1[i]=arr[l+i];
+        }
+        for(int i=r-m;i>0;i--){
+            a2[r-m-i]=arr[r-i+1];
+        }
+        int i=0,j=0;
+        while(i<y && j<r-m){
+            if(a1[i]>a2[j]){
+                arr[l++]=a2[j++];
+                ans+=y-i;
+            }
+            else{
+                arr[l++]=a1[i++];
+            }
+        }
+        while(i<y){
+            arr[l++]=a1[i++];
+        }
+        while(j<r-m){
+            arr[l++]=a2[j++];
+        }
+        return ans;
+    }
+    static int inversionCount(int arr[]) {
+        return divide(arr,0,arr.length-1);
+    }
+
+    //Reverse Pairs(By merge sort with checking condition for smaller crossing bigger ones)
+    private int merge1(int nums[], int s, int m, int e){
+        int ans=0;
+        int a[]=new int[m-s+1];
+        int b[]=new int[e-m];
+        for(int i=s;i<=m;i++){
+            a[i-s]=nums[i];
+        }
+        for(int i=m+1;i<=e;i++){
+            b[i-m-1]=nums[i];
+        }
+        int j=m+1;
+        for(int i=s;i<=m;i++){
+            while(j<=e && nums[i]>(long)2*nums[j]){
+                j++;
+            }
+            ans+=j-m-1;
+        }
+        j=0;
+        int i=0,y=m-s+1;
+        while(i<y && j<e-m){
+            if(a[i]>b[j]){
+                nums[s++]=b[j++];
+            }
+            else{
+                nums[s++]=a[i++];
+            }
+        }
+        while(i<y){
+            nums[s++]=a[i++];
+        }
+        while(j<e-m){
+            nums[s++]=b[j++];
+        }
+        return ans;
+    }
+    private int divide1(int nums[], int s, int e){
+        if(s==e) return 0;
+        return divide1(nums,s,(s+e)/2)+divide1(nums,(s+e+2)/2,e)+merge1(nums, s, (s+e)/2, e);
+    }
+    public int reversePairs(int[] nums) {
+        return divide1(nums,0,nums.length-1);
+    }
+
+    //Maximum Product Subarray
+    public int maxProduct(int[] nums) {
+        boolean single_neg=true;
+        int max=nums[0], neg=0, pehle=1, baad=1, cur=nums[0];
+        for(int i=0;i<nums.length;i++){
+            max=Math.max(max,nums[i]);
+            if(nums[i]>0){
+                single_neg=false;
+                if(i>0) cur*=nums[i];
+                if(neg==0){
+                    pehle*=nums[i];
+                }
+                else if(neg%2==1){
+                    baad*=nums[i];
+                }
+            }
+            else if(nums[i]<0){
+                if(neg==0){
+                    pehle*=nums[i];
+                }
+                if(neg%2==0){
+                    baad=nums[i];
+                }
+                neg++;
+                if(i>0) cur*=nums[i];
+            }
+            else{
+                if(neg%2==0){
+                    max=Math.max(cur,max);
+                    neg=0; baad=1;
+                    single_neg=true;
+                    while(i+1<nums.length && nums[i+1]==0) i++;
+                    if(i+1<nums.length){
+                        pehle=cur=nums[i+1];
+                        if(nums[i+1]<0){
+                            neg++;
+                            baad=nums[i+1];
+                            max=Math.max(max,nums[i+1]);
+                        }
+                        else if(nums[i+1]>0) single_neg=false;
+                        i++;
+                    }
+                }
+                else{
+                    if(neg>1) single_neg=false;
+                    if(!single_neg) cur/=Math.max(pehle,baad);
+                    max=Math.max(max,cur);
+                    neg=0; baad=1;
+                    single_neg=true;
+                    while(i+1<nums.length && nums[i+1]==0) i++;
+                    if(i+1<nums.length){
+                        pehle=cur=nums[i+1];
+                        if(nums[i+1]<0){
+                            neg++;
+                            baad=nums[i+1];
+                            max=Math.max(max,nums[i+1]);
+                        }
+                        else if(nums[i+1]>0) single_neg=false;
+                        i++;
+                    }
+                }
+            }
+        }
+        if(neg%2==0){
+            max=Math.max(cur,max);
+        }
+        else{
+            if(neg>1) single_neg=false;
+            if(!single_neg) cur/=Math.max(pehle,baad);
+            max=Math.max(max,cur);
+        }
+        return max;
+    }
 }
