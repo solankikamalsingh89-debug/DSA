@@ -57,6 +57,11 @@ public class contest{
         //14/03/2026(Div2)
         Bingo_Candies(); //A
         Cyclists(); //B
+
+        //15/04/2026
+        Blocked(); //A
+        OIE_Excursion(); //B
+        Grid_L(); //C
     }
 
     public static void Binary_Array_Game() {
@@ -894,6 +899,81 @@ public class contest{
                 System.out.println(ans);
             }
             else System.out.println(0);
+        }
+    }
+
+    public static void Blocked() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int a[]=new int[n];
+            for(int i=0;i<n;i++){
+                a[i]=s.nextInt();
+            }
+            boolean m=true;
+            Arrays.sort(a);
+            for(int i=0;i<n-1;i++){
+                if(a[i]==a[i+1]){
+                    m=false;
+                    break;
+                }
+            }
+            if(m){
+                for(int i=n-1;i>=0;i--){
+                    System.out.print(a[i]+" ");
+                }
+                System.out.println();
+            }
+            else System.out.println(-1);
+        }
+    }
+
+    public static void OIE_Excursion() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int m=s.nextInt();
+            int pr=s.nextInt();
+            int rem=m-1;
+            boolean ans=true;
+            for(int i=1;i<n;i++){
+                int q=s.nextInt();
+                if(q==pr){
+                    rem--;
+                    if(rem==0){
+                        ans=false;
+                    }
+                }
+                else{
+                    rem=m-1;
+                    pr=q;
+                }
+            }
+            if(ans) System.out.println("YES");
+            else System.out.println("NO");
+        }
+    }
+
+    public static void Grid_L() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int p=s.nextInt();
+            int q=s.nextInt();
+            boolean dn=false;
+            for(int m=0;;m++){
+                int v=(p+2*q-m)/(2*m+1);
+                if((p+2*q-m)%(2*m+1)==0){ //satisfies condition for both n*m sides number equal p+2*q
+                    if(p<v-m) continue; //Condition minimum p required to make that n*m
+                    System.out.println(m+" "+v);
+                    dn=true;
+                    break;
+                }
+                if(m>v) break; // TO reduce time complexity
+            }
+            if(!dn) System.out.println(-1);
         }
     }
 }
