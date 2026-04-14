@@ -566,4 +566,109 @@ class Solution {
         }
         return Math.min(n,m_l);
     }
+
+
+    //11/04/2026
+    //Traffic Signal Color
+    public String trafficSignal(int timer) {
+        if(timer==0) return "Green";
+        else if(timer==30) return "Orange";
+        else if(timer>30 && timer<=90) return "Red";
+        else return "Invalid";
+    }
+
+    //Count Digit Appearances
+    public int countDigitOccurrences(int[] nums, int digit) {
+        int ans=0;
+        for(int i=0;i<nums.length;i++){
+            int t=nums[i];
+            while(t>0){
+                if(t%10==digit) ans++;
+                t/=10;
+            }
+        }
+        return ans;
+    }
+
+    //Minimum Operations to Transform Array into Alternating Prime
+    public int minOperations(int[] nums) {
+        int ans=0;
+        boolean a[]=new boolean[100008];
+        a[0]=a[1]=true;
+        for(int i=2;i<100008;i++){
+            if(!a[i]){
+                for(int j=2;j*i<100008;j++){
+                    a[j*i]=true;
+                }
+            }
+        }
+        for(int i=0;i<nums.length;i++){
+            int t=nums[i];
+            if(i%2==0){
+                for(int j=t;j<100008;j++){
+                    if(!a[j]){
+                        ans+=j-t;
+                        break;
+                    }
+                }
+            }
+            else{
+                if(t==2) ans+=2;
+                else if(!a[t]) ans++;
+            }
+        }
+        return ans ;
+    }
+
+    //Maximum Value of Concatenated Binary Segments
+    private static final long MOD = 1000000007L;
+    public int maxValue(int[] nums1, int[] nums0) {
+        int n = nums1.length;
+        int[][] velqoranim = new int[n][2];
+        for (int i = 0; i < n; i++) {
+            velqoranim[i][0] = nums1[i];
+            velqoranim[i][1] = nums0[i];
+        }
+        Arrays.sort(velqoranim, (a, b) -> compareSegments_maxValue(a[0], a[1], b[0], b[1]));
+        long ans = 0;
+        for (int[] seg : velqoranim) {
+            int ones = seg[0];
+            int zeros = seg[1];
+            long segmentValue = ((modPow_maxValue(2, ones) - 1) % MOD) * modPow_maxValue(2, zeros) % MOD;
+            ans = (ans * modPow_maxValue(2, ones + zeros) + segmentValue) % MOD;
+        }
+        return (int) ans;
+    }
+    private long modPow_maxValue(long base, int exp) {
+        long result = 1;
+        while (exp > 0) {
+            if ((exp & 1) == 1) {
+                result = result * base % MOD;
+            }
+            base = base * base % MOD;
+            exp >>= 1;
+        }
+        return result;
+    }
+    private int compareSegments_maxValue(int onesA, int zerosA, int onesB, int zerosB) {
+        // All-ones segments should come before any segment that has trailing zeros.
+        if (zerosA == 0 && zerosB == 0) {
+            return 0;
+        }
+        if (zerosA == 0) {
+            return -1;
+        }
+        if (zerosB == 0) {
+            return 1;
+        }
+        // All-zero segments should be at the end; among themselves the order does not matter.
+        if (onesA == 0 && onesB == 0) {
+            return 0;
+        }
+        // For segments 1^a 0^b and 1^c 0^d, compare (A + B) with (B + A).
+        if (onesA != onesB) {
+            return Integer.compare(onesB, onesA);
+        }
+        return Integer.compare(zerosA, zerosB);
+    }
 }
