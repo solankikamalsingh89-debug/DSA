@@ -22,6 +22,10 @@ class Codechef{
         All_zero(); //1
         Sequential_Camp(); //2
         Sum_not_equal(); //3
+        //15/04/2026(div3)
+        Cooler(); //1
+        Non_Negative_Sum(); //2
+        Binary_Construction(); //3(Done later)
 
 	}
 
@@ -366,5 +370,70 @@ class Codechef{
 	        if(aa)System.out.println("Yes");
 	        else System.out.println("No");
 	    }
+	}
+
+    public static void Cooler () throws java.lang.Exception
+	{
+		// your code goes here
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int k=s.nextInt();
+            System.out.println(a(n)-a(k));
+        }
+	}
+	public static int a_Cooler(int n){
+	    return n*(n+1)/2;
+	}
+
+    public static void Non_Negative_Sum () throws java.lang.Exception
+	{
+		// your code goes here
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int ans=0;
+            int p_sum=0;
+            int k[]=new int[n];
+            int j=0;
+            for(int i=0;i<n;i++){
+                int q=s.nextInt();
+                if(q>=0) {
+                    p_sum+=q;
+                    ans++;
+                }
+                else{
+                    k[j++]=q;
+                }
+            }
+            Arrays.sort(k);
+            for(int i=j-1;i>=0;i--){
+                if(k[i]==0) break;
+                p_sum+=k[i];
+                if(p_sum>=0) ans++;
+                else break;
+            }
+            System.out.println(ans);
+        }
+	}
+
+    public static void Binary_Construction () throws java.lang.Exception
+	{
+		// your code goes here
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            System.out.print("0");
+            if(n==2) System.out.println("1");
+            else{
+                for(int i=0;i<n-2;i++){
+                    System.out.print("1");
+                }
+                System.out.println("0");
+            }
+        }
 	}
 }
