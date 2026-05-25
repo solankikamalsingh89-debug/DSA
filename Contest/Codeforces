@@ -62,6 +62,12 @@ public class contest{
         Blocked(); //A
         OIE_Excursion(); //B
         Grid_L(); //C
+
+        //23/05/2026
+        Slimes_on_a_line(); //A
+        Absolute_Cinema(); //B
+        We_be_Flipping_Easy(); //C
+        We_be_Flipping_Hard(); //C2
     }
 
     public static void Binary_Array_Game() {
@@ -974,6 +980,106 @@ public class contest{
                 if(m>v) break; // TO reduce time complexity
             }
             if(!dn) System.out.println(-1);
+        }
+    }
+
+    public static void Slimes_on_a_line(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int l=1000;
+            int h=0;
+            for(int i=0;i<n;i++){
+                int q=s.nextInt();
+                h=Math.max(h,q);
+                l=Math.min(l,q);
+            }
+            System.out.println((h-l+1)/2);
+        }
+    }
+
+    public static void Absolute_Cinema(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int a[]=new int[n];
+            long sum=0;
+            int h=0;
+            for(int i=0;i<n;i++){
+                a[i]=s.nextInt();
+            }
+            for(int i=0;i<n;i++){
+                int q=s.nextInt();
+                sum+=Math.max(q,a[i]);
+                h=Math.max(h,Math.min(q,a[i]));
+            }
+            System.out.println(sum+h);
+        }
+    }
+
+    public static void We_be_Flipping_Easy(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int a[]=new int[n];
+            boolean same=true;
+            for(int i=0;i<n;i++){
+                a[i]=s.nextInt();
+            }
+            ArrayList<Integer> b=new ArrayList<>();
+            for(int i=n-1;i>=0;i--){
+                if((same && a[i]>0)||(a[i]<0 && !same)){
+                    b.add(i+1);
+                    same=!same;
+                }
+            }
+            System.out.println(b.size());
+            for(int i=0;i<b.size();i++){
+                System.out.print(b.get(i)+" ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void We_be_Flipping_Hard(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int a[]=new int[n];
+            int ls=0;
+            long sum_mag=0;
+            int first_negative=n;
+            long sum_mag1=0;
+            for(int i=0;i<n;i++){
+                a[i]=s.nextInt();
+                if(a[i]>0 && sum_mag-a[i]>sum_mag1) {
+                    ls=i;
+                    sum_mag1=sum_mag-a[i];
+                }
+                else if(a[i]<0) sum_mag-=a[i];
+                if(first_negative==n && a[i]<0) first_negative=i;
+                
+            }
+            ArrayList<Integer> b=new ArrayList<>();
+            int pichla_neg=first_negative;
+            if(first_negative<ls && first_negative!=0) b.add(first_negative);
+            for(int i=first_negative;i<ls;i++){
+                if(a[i]>0 && (a[i+1]<0 || i==ls-1)){
+                    b.add(i+1);
+                    b.add(pichla_neg);
+                }
+                else if(a[i]<0) pichla_neg=i+1;
+            }
+            if(first_negative<ls) b.add(ls+1);
+            System.out.println(b.size());
+            for(int i=0;i<b.size();i++){
+                System.out.print(b.get(i)+" ");
+            }
+            System.out.println();
         }
     }
 }
