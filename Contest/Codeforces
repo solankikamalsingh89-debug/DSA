@@ -63,6 +63,11 @@ public class contest{
         OIE_Excursion(); //B
         Grid_L(); //C
 
+        //21/05/2026 (Div2)
+        Construct_an_Array(); //A
+        Another_Sorting_Problem(); //B
+        Chipmunk_Theo_and_Equality(); //C--Here simple optimization(by reducing continuos check to end check only)
+
         //23/05/2026
         Slimes_on_a_line(); //A
         Absolute_Cinema(); //B
@@ -981,6 +986,179 @@ public class contest{
             }
             if(!dn) System.out.println(-1);
         }
+    }
+
+    public static void Construct_an_Array() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            HashSet<Integer> a=new HashSet<>();
+            a.add(2*n);
+            System.out.print((2*n)+" ");
+            int p=2*n;
+            int m=n-1;
+            for(int i=2;i<2*n && m>0;i++){
+                if((!a.contains(i)) && (!a.contains(i+p))){
+                    System.out.print(i+" ");
+                    a.add(i+p);
+                    p=i;
+                    m--;
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    public static void Another_Sorting_Problem(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int lb=0;
+            int a[]=new int[n];
+            a[0]=s.nextInt();
+            for(int i=1;i<n;i++){
+                a[i]=s.nextInt();
+                lb=Math.max(lb,a[i-1]-a[i]);
+            }
+            boolean flg=true;
+            for(int i=1;i<n;i++){
+                if(a[i]<a[i-1]) a[i]+=lb;
+                if(a[i]<a[i-1]) {flg=false;break;}
+            }
+            if(flg) System.out.println("YES");
+            else System.out.println("NO");
+        }
+    }
+
+    public static void Chipmunk_Theo_and_Equality() throws Exception {
+        FastScanner fs = new FastScanner();
+        StringBuilder output = new StringBuilder();
+        long testCases = fs.nextLong();
+        while (testCases-- > 0) {
+            int n = (int) fs.nextLong();
+            long[] numbers = new long[n];
+            long minimumNumber = Long.MAX_VALUE;
+            // store all numbers
+            for (int i = 0; i < n; i++) {
+                numbers[i] = fs.nextLong();
+                minimumNumber = Math.min(minimumNumber, numbers[i]);
+            }
+            /*
+             reachableTargets:
+             Stores all candidate target values
+             that we should consider.
+            */
+            HashSet<Long> reachableTargets = new HashSet<>();
+            /*
+             validTarget:
+             acts like boolean map in C++
+            */
+            HashMap<Long, Boolean> validTarget = new HashMap<>();
+            // Build all reachable values from minimum number
+            validTarget.put(1L, true);
+            validTarget.put(2L, true);
+            reachableTargets.add(1L);
+            reachableTargets.add(2L);
+            if (minimumNumber != 1) {
+                while (minimumNumber != 1) {
+                    validTarget.put(minimumNumber, true);
+                    reachableTargets.add(minimumNumber);
+                    if ((minimumNumber & 1) == 1) {
+                        minimumNumber++;
+                    } else {
+                        minimumNumber /= 2;
+                    }
+                }
+            }
+            /*
+             reachCount[value]
+             = how many numbers can reach this value
+            */
+            HashMap<Long, Long> reachCount = new HashMap<>();
+            /*
+             totalCost[value]
+             = total operations needed for all numbers
+               to reach this value
+            */
+            HashMap<Long, Long> totalCost = new HashMap<>();
+            // Process every number
+            for (long currentNumber : numbers) {
+                long operations = 0;
+                long x = currentNumber;
+                // Special handling for odd number at start
+                if ((x & 1) == 1) {
+                    if (validTarget.containsKey(x)) {
+                        reachCount.put(
+                                x,
+                                reachCount.getOrDefault(x, 0L) + 1
+                        );
+                        totalCost.put(
+                                x,
+                                totalCost.getOrDefault(x, 0L) + operations
+                        );
+                    }
+                    x++;
+                    operations++;
+                    // if became 2
+                    if (x == 2) {
+                        if (validTarget.containsKey(x)) {
+                            reachCount.put(
+                                    x,
+                                    reachCount.getOrDefault(x, 0L) + 1
+                            );
+                            totalCost.put(
+                                    x,
+                                    totalCost.getOrDefault(x, 0L) + operations
+                            );
+                        }
+                        continue;
+                    }
+                }
+                // Traverse transformation path
+                while (x != 1) {
+                    if (validTarget.containsKey(x)) {
+                        reachCount.put(
+                                x,
+                                reachCount.getOrDefault(x, 0L) + 1
+                        );
+                        totalCost.put(
+                                x,
+                                totalCost.getOrDefault(x, 0L) + operations
+                        );
+                    }
+                    operations++;
+                    if ((x & 1) == 1) {
+                        x++;
+                    } else {
+                        x /= 2;
+                    }
+                }
+                // Final state = 1
+                reachCount.put(
+                        1L,
+                        reachCount.getOrDefault(1L, 0L) + 1
+                );
+                totalCost.put(
+                        1L,
+                        totalCost.getOrDefault(1L, 0L) + operations
+                );
+            }
+            // Find minimum answer
+            long answer = Long.MAX_VALUE;
+            for (long target : reachableTargets) {
+                if (reachCount.getOrDefault(target, 0L) < n) {
+                    continue;
+                }
+                answer = Math.min(
+                        answer,
+                        totalCost.get(target)
+                );
+            }
+            output.append(answer).append('\n');
+        }
+        System.out.print(output);
     }
 
     public static void Slimes_on_a_line(){
