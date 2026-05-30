@@ -63,6 +63,12 @@ public class contest{
         OIE_Excursion(); //B
         Grid_L(); //C
 
+        //18/05/2026(Div 2)
+        Optimal_purchase(); //A
+        Digit_String(); //B
+        Arrange_the_number_in_a_circle(); //C
+        Good_schedule(); //D 
+
         //21/05/2026 (Div2)
         Construct_an_Array(); //A
         Another_Sorting_Problem(); //B
@@ -985,6 +991,130 @@ public class contest{
                 if(m>v) break; // TO reduce time complexity
             }
             if(!dn) System.out.println(-1);
+        }
+    }
+
+    public static void Optimal_purchase() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int a=s.nextInt();
+            int b=s.nextInt();
+            if((a*3)<=b) System.out.println((long)a*n);
+            else{
+                System.out.println((long)(n/3)*b+Math.min(a*(n%3),b));
+            }
+        }
+    }
+
+    public static void Digit_String() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            String q=s.next();
+            int ans=0;
+            int se=0;
+            ArrayList<Integer> o=new ArrayList<>();
+            int e=0;
+            //No of 4 divisible digits(0,4,8)+All 2 divisible(2,6) after any odd digit
+            for(int i=0;i<q.length();i++){
+                if(q.charAt(i)=='0' || q.charAt(i)=='4' || q.charAt(i)=='8') ans++;
+                else{
+                    if(q.charAt(i)=='2' || q.charAt(i)=='6') {
+                        if(e>0){
+                            se++;
+                            e++;
+                        }
+                        else if(e!=0){
+                            o.add(-e);
+                            e=1;
+                            se++;
+                        }
+                        
+                    }
+                    else{
+                        if(e<=0)e--;
+                        else{
+                            o.add(e);
+                            e=-1;
+                        }
+                    }
+                }
+            }
+            if(e>0) o.add(e);
+            int k=se;
+            int es=0,eo=0;
+            //System.out.println(f(ans,o,0,o.size()-1));
+            for(int i=1;i<o.size();i+=2){
+                es+=o.get(i);
+                eo+=o.get(i-1);
+                k=Math.min(k,eo+se-es);
+            }
+        System.out.println(k+ans);
+            //System.out.println(ans+k);//oeoeoe
+        }
+    }
+
+    public static void Arrange_the_number_in_a_circle() throws java.lang.Exception
+	{
+		// your code goes here
+        Scanner s = new Scanner ( System.in );
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int l1=0; long f1=0;
+            long ans=0;
+            for(int i= 0;i<n;i++){
+                int q=s.nextInt();
+                if(q>1){
+                    ans+=q;
+                    f1+=(q-2)/2;
+                }
+                else l1++;
+            }
+            if(n-l1==1) {
+                ans+= Math.min(1,l1--);
+                if(ans<3) System.out.println(0);
+                else System.out.println(ans+Math.max(0,Math.min(f1,l1)));
+            }
+            else System.out.println(ans+Math.min(f1,l1));
+        }
+	}
+
+    public static void Good_schedule(){ //Good DP problem at that time- Here we count from each index till if 1,1 appers simultaneously and when didn't appears simultaneously recently
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int a[]=new int[n];
+            int b[]=new int[n];
+            int pa[]=new int[n+1];
+            int pb[]=new int[n+1];
+            int dp[]=new int[n+1];
+            long ans = 0;
+            for(int i=0;i<n;i++)a[i]=s.nextInt()-1;
+            for(int i=0;i<n;i++)b[i]=s.nextInt()-1;
+            for(int i=0;i<=n;i++)pa[i]=pb[i]=dp[i]=n;
+            for(int i=n-1;i>=0;i--){
+                pa[a[i]] = pb[b[i]] = i; //Setting recent values came at index i
+                if(a[i]==b[i]){
+                    int x=a[i]+1; //Next to search for
+                    if(pa[x]==pb[x]){ //When in both x appears simultaneously-- counted condition
+                        dp[i]=dp[pa[x]]; //dp[i]=recent idx of searching x
+                    }
+                    else{
+                        dp[i]=Math.min(pa[x],pb[x]); //recent idx of searching x min in a and b
+                    }
+                }
+                if(pa[0]!=pb[0]){
+                    ans+=Math.min(pa[0],pb[0])-i; //Addition of cases with zero episode watched form i-th idx as starting
+                }
+                else{ //Addition of cases till 0 occurued together to till satisfying condition
+                    ans+=dp[pa[0]]-i; 
+                }
+            }
+            System.out.println(ans);
         }
     }
 
