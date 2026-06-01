@@ -79,6 +79,11 @@ public class contest{
         Absolute_Cinema(); //B
         We_be_Flipping_Easy(); //C
         We_be_Flipping_Hard(); //C2
+
+        //30/05/2026(Div2)
+        Convergence(); //A
+        Cake_Leveling(); //B
+        Seating_Arrangement(); //C1 & C2(For both version same code)
     }
 
     public static void Binary_Array_Game() {
@@ -1388,6 +1393,99 @@ public class contest{
                 System.out.print(b.get(i)+" ");
             }
             System.out.println();
+        }
+    }
+
+    public static void Convergence(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int a[]=new int[n];
+            for(int i=0;i<n;i++)a[i]=s.nextInt();
+            Arrays.sort(a);
+            int b=0;
+            int cf=1;
+            int mf=0;
+            for(int i=1;i<n;i++){
+                if(a[i]==a[i-1]) cf++;
+                else{
+                    if(mf==0) mf=n-cf;
+                    else mf=Math.min(mf,Math.max(b,n-b-cf));
+                    b+=cf;
+                    cf=1;
+                }
+            }
+            mf=Math.min(mf,n-cf);
+            System.out.println(mf);
+        }
+    }
+
+    public static void Cake_Leveling(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int a[]=new int[n];
+            for(int i=0;i<n;i++){
+                a[i]=s.nextInt();
+            }
+            long ex=0;
+            int h=a[0];
+            for(int i=0;i<n;i++){
+                ex+=a[i];
+                h=Math.min((int)(ex/(i+1)),h);
+                System.out.print(h+" ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void Seating_Arrangement(){
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        while(t-->0){
+            int n=sc.nextInt(); //Max ans = x*s
+            int x=sc.nextInt();
+            int s=sc.nextInt();
+            char a[]=sc.next().toCharArray();
+            int atoe=0;
+            int in=0; //introverts till now
+            long ex=0L; //Extroverts places empty
+            int ans=0;
+            for(char i:a){
+                //if(in==x) break;
+                if(i=='E'){
+                    if(ex>0){
+                        ex--;
+                    }else{
+                        if(in<x){
+                            if(atoe>0){
+                                atoe--;
+                                ex+=s-1;
+                                in++;
+                            }else continue;
+                        }else break;
+                    }
+                    ans++;
+                }else if(i=='I'){
+                    if(in<x){
+                        in++;
+                        ex+=s-1;
+                        ans++;
+                    }
+                }else{
+                    if(ex>0){
+                        ex--;
+                        atoe++;
+                    }else{
+                        if(in<x){ in++; ex+=s-1;}
+                        else break;
+                    }
+                    ans++;
+                }
+            }
+            System.out.println(ans);
         }
     }
 }
