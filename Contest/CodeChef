@@ -26,7 +26,11 @@ class Codechef{
         Cooler(); //1
         Non_Negative_Sum(); //2
         Binary_Construction(); //3(Done later)
-
+        //20/05/2026(Div3)
+        Easy_Speaking(); //1
+        Beginnings_and_endings(); //2
+        Magic_mirror(); //3
+        Planting_roses(); //4
 	}
 
     public static void front_back_matching(){
@@ -436,4 +440,116 @@ class Codechef{
             }
         }
 	}
+
+    public static void Easy_Speaking() throws java.lang.Exception
+	{
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            String q=s.next();
+            HashSet<Character> a=new HashSet<>();
+            a.add('a');
+            a.add('e');
+            a.add('i');
+            a.add('o');
+            a.add('u');
+            int c=0;
+            for(int i=0;i<n && c<4;i++){
+                if(a.contains(q.charAt(i))){
+                    c=0;
+                }
+                else{
+                    c++;
+                }
+            }
+            if(c==4) System.out.println("Yes");
+            else System.out.println("No");
+        }
+	}
+
+    public static void Beginnings_and_endings() throws java.lang.Exception
+	{
+		// your code goes here
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int ans=200;
+            HashMap<Integer,Integer> a=new HashMap<>();
+            for(int i=0;i<n;i++){
+                int q=s.nextInt();
+                if(a.getOrDefault(q,-1)==-1){
+                    a.put(q,i);
+                }
+                else{
+                    ans=Math.min(ans,a.get(q)+n-i-1);
+                }
+            }
+            if(ans==200) System.out.println(-1);
+            else System.out.println(ans);
+        }
+	}
+
+    public static void Magic_mirror() throws java.lang.Exception
+	{
+		// your code goes here
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            boolean ans=true;
+            int a[]=new int[n/2-1];
+            int p=s.nextInt();
+            for(int i=0;i<n/2-1;i++){
+                int q=s.nextInt();
+                a[i]=q-p;
+                p=q;
+            }
+            p=s.nextInt();
+            for(int i=n/2-2;i>=0;i--){
+                int q=s.nextInt();
+                if(q-p!=a[i]) ans=false;
+                p=q;
+            }
+            if(ans) System.out.println("Yes");
+            else System.out.println("No");
+        }
+	}
+
+	public static void Planting_roses() throws java.lang.Exception
+	{
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            long m=s.nextLong();//Potent to be filled
+            long k=s.nextLong();
+            int a[]=new int[n];
+            long ans=0;
+            for(int i=0;i<n;i++){
+                int q=s.nextInt();
+                if(m<=0) continue;
+                a[i]=(int)(q%k);
+                long p=(m)/(k+1); //Why faiiled on (m+1) at place of m--> 1 3 1 3 i.e. extra addition when going in else condition
+                if(p>=q/k){
+                    ans+=q-a[i];
+                    m-=q-a[i]+q/k;
+                }
+                else{
+                    ans+=p*k;
+                    m-=p*(k+1);
+                    ans+=m;
+                    m=0;
+                }
+            }
+            if(m>0) Arrays.sort(a);
+            for(int i=n-1;i>=0 && a[i]!=0 && m>0;i--){
+                ans+=Math.min(a[i],m);
+                m-=(a[i]+1);
+            }
+            System.out.println(ans);
+        }
+	}
+
 }
