@@ -93,6 +93,12 @@ public class contest{
         //09/06/2026(Div2)
         AI_Project_Development(); //A
         Different_Distances(); //B
+
+        //12/06/2026(Div3)
+        Games_on_the_Train(); //A
+        Tatar_TV_Show(); //B
+        Omsk_Programmers(); //C
+        Brand_New_Tatar_TV_Show(); //D
     }
 
     public static void Binary_Array_Game() {
@@ -1710,6 +1716,91 @@ public class contest{
                 else System.out.print(i+" ");
             }
             System.out.println();
+        }
+    }
+
+    public static void Games_on_the_Train() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int max=0;
+            int min=10;
+            while(n-->0){
+                int q=s.nextInt();
+                max=Math.max(max,q);
+                min=Math.min(min,q);
+            }
+            System.out.println(max-min+1);
+        }
+    }
+
+    public static void Tatar_TV_Show() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int k=s.nextInt();
+            char[] q=s.next().toCharArray();
+            boolean flg=true;
+            for(int i=0;i<n;i++){
+                if(q[i]=='1'){
+                    if(i+k<n) {
+                        if(q[i+k]=='0') q[i+k]='1';
+                        else q[i+k]='0';
+                    }
+                    else {
+                        flg=false;
+                        break;
+                    }
+                }
+            }
+            if(flg) System.out.println("YES");
+            else System.out.println("NO");
+        }
+    }
+
+    public static void Omsk_Programmers() { //divide by x se same aa jaaye yaa 
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            System.out.println(Omsk_Programmer_helper(s.nextInt(),s.nextInt(),s.nextInt()));
+        }
+    }
+    private static long Omsk_Programmer_helper(int a,int b,int x){
+        return Omsk_Programmer_d(a, b, x);
+    }
+    private static long Omsk_Programmer_d(int a,int b,int x){
+        if(a>b){
+            return Math.min(a-b,1+Omsk_Programmer_d(a/x,b,x));
+        }
+        else if(b>a){
+            return Math.min(b-a,1+Omsk_Programmer_d(a,b/x,x));
+        }
+        else return 0;
+    }
+
+    public static void Brand_New_Tatar_TV_Show() { //divide by x se same aa jaaye yaa 
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int k=s.nextInt();
+            int a[]=new int[n];
+            boolean flg=true;
+            for(int i=0;i<n;i++) a[i]=s.nextInt();
+            Arrays.sort(a);
+            int c=1;
+            for(int i=1;i<n;i++){
+                if(a[i]==a[i-1]) c++;
+                else{
+                    if(a[i]-a[i-1]<=k) {flg=false; break;}
+                    else if(c%2==0) {flg=false; break;}
+                }
+            }
+            if(c%2==0) {flg=false;}
+            if(!flg) System.out.println("YES");
+            else System.out.println("NO");
         }
     }
 }
