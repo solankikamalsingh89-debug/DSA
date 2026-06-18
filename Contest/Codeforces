@@ -89,6 +89,10 @@ public class contest{
         Euclid_Sequence_and_two_numbers(); //A
         Pallindrome_Twelve_and_Two_terms(); //B
         Vessels_Heights_and_Two_Versions_Easy(); //C
+
+        //09/06/2026(Div2)
+        AI_Project_Development(); //A
+        Different_Distances(); //B
     }
 
     public static void Binary_Array_Game() {
@@ -1670,6 +1674,40 @@ public class contest{
                     if(k<0) k=n-1;
                 }
                 System.out.print(a+" ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void AI_Project_Development() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int x=s.nextInt();
+            int y=s.nextInt();
+            int z=s.nextInt();
+            System.out.println(Math.min((x+y+n-1)/(x+y),z+(Math.max(n-(z*x),0)+x+10*y-1)/(x+10*y)));
+        }
+    }
+
+    public static void Different_Distances() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            for(int i=1;i<=n;i++) System.out.print(i+" ");
+            for(int i=1;i<=n;i++) System.out.print(i+" "+i+" ");
+            //(n-i)+2*(i-1)),1,2*(n-i)+(i-1)
+            //n-i==i-1
+            //2i=n+1
+            //3,2  5,3   8,4
+            for(int i=1;i<=n;i++) {
+                if(n+1==2*i){
+                    i++;
+                    System.out.print(i+" "+(i-1)+" ");
+                }
+                else System.out.print(i+" ");
             }
             System.out.println();
         }
