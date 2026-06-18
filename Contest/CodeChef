@@ -31,6 +31,10 @@ class Codechef{
         Beginnings_and_endings(); //2
         Magic_mirror(); //3
         Planting_roses(); //4
+        //03/06/2026(Div3)
+        Even_Sum(); //1
+        No_3_Equal(); //2
+        Sum_Reduction(); //3
 	}
 
     public static void front_back_matching(){
@@ -552,4 +556,64 @@ class Codechef{
         }
 	}
 
+    public static void Even_Sum() throws java.lang.Exception
+	{
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            long sum=0;
+            boolean e=false,o=false;
+            for(int i=0;i<n;i++){
+                int q=s.nextInt();
+                if(q%2==0) e=true;else o=true;
+                sum+=q;
+            }
+            if((sum%2==0 && e)||(sum%2==1 && o)) System.out.println("Yes");
+            else System.out.println("No");
+        }
+	}
+
+    public static void No_3_Equal() throws java.lang.Exception
+	{
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            char a[]=s.next().toCharArray();
+            int ans=0;
+            for(int i=2;i<n;i++){
+                if(a[i]==a[i-1] && a[i]==a[i-2]){
+                    ans++;
+                    i+=2;
+                }
+            }
+            System.out.println(ans);
+        }
+	}
+
+    public static void Sum_Reduction () throws java.lang.Exception
+	{
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            HashSet<Integer> a=new HashSet<>();
+            boolean ans=true;
+            while(n-->0){
+                int q=s.nextInt();
+                int p=0;
+                while(q>0 && ans){
+                    if(q%2==1){
+                        if(a.contains(p)) ans=false;
+                        else a.add(p);
+                    }
+                    q/=2;
+                    p++;
+                }
+            }
+            if(ans) System.out.println("Yes");
+            else System.out.println("No");
+        }
+    }
 }
