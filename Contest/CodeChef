@@ -39,6 +39,10 @@ class Codechef{
         Early_Certificates(); //1
         Draft_Picks(); //2
         Eventually_Equal(); //3 (Later)
+        //17/06/2026(Div4)
+        Interseting_Match(); //1
+        Lose_less(); //2
+        Starved_for_Seating(); //3
 	}
 
     public static void front_back_matching(){
@@ -681,5 +685,57 @@ class Codechef{
 	private static int eventually_equal_helper_gcd(int a, int b){
 	    if(a==b || b==0) return a;
 	    return eventually_equal_helper_gcd(b,a%b);
+	}
+
+    public static void Interseting_Match() throws java.lang.Exception
+	{
+        Scanner s=new Scanner(System.in);
+        if(Math.abs(s.nextInt()-s.nextInt())<=2) System.out.println("Interesting");
+        else System.out.println("Boring");
+	}
+
+    public static void Lose_less() throws java.lang.Exception
+	{
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int m=s.nextInt();
+            int n=s.nextInt();
+            if(n<=m) System.out.println(m-n);
+            else{
+                if((n-m)%2==0) System.out.println(0);
+                else System.out.println(1);
+            }
+        }
+	}
+
+    public static void Starved_for_Seating() throws java.lang.Exception
+	{
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int k=s.nextInt();
+            int perm=0;
+            int a[]=new int[n];
+            for(int i=0;i<n;i++){
+                a[i]=s.nextInt()/2;
+                perm+=a[i];
+            }
+            if(perm>k)System.out.println((n*(n-1))/2);
+            else{
+                k-=perm;
+                Arrays.sort(a);
+                int j=n-1;
+                int i=0;
+                int ans=0;
+                for(;i<n && j>i;i++){
+                    while(j>i && a[i]+a[j]>k) j--;
+                    ans+=(n-j-1);
+                }
+                n-=i;
+                System.out.println(ans+((n-1)*n)/2);
+            }
+        }
 	}
 }
