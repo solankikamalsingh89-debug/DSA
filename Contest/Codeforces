@@ -84,6 +84,11 @@ public class contest{
         Convergence(); //A
         Cake_Leveling(); //B
         Seating_Arrangement(); //C1 & C2(For both version same code)
+
+        //07/06/2026(Div2)
+        Euclid_Sequence_and_two_numbers(); //A
+        Pallindrome_Twelve_and_Two_terms(); //B
+        Vessels_Heights_and_Two_Versions_Easy(); //C
     }
 
     public static void Binary_Array_Game() {
@@ -1486,6 +1491,187 @@ public class contest{
                 }
             }
             System.out.println(ans);
+        }
+    }
+    
+    public static void Euclid_Sequence_and_two_numbers() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int a[]=new int[n];
+            for(int i=0;i<n;i++) a[i]=s.nextInt();
+            Arrays.sort(a);
+            boolean ans=true;
+            if(n==2){
+                System.out.println(a[1]+" "+a[0]);
+                continue;
+            }
+            for(int i=n-3;i>=0;i--){
+                if(a[i+2]%a[i+1]!=a[i]) {ans=false;break;}
+            }
+            if(ans) System.out.println(a[a.length-1]+" "+a[a.length-2]);
+            else System.out.println(-1);
+        }
+    }
+
+    public static void Pallindrome_Twelve_and_Two_terms() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            long n=s.nextLong();
+            long t1=n;
+            int l=0;
+            while(t1>0){
+                l++;
+                t1/=10;
+            }
+            if(l==1){System.out.println(n+" "+0);continue;}
+            if(n%12==0){System.out.println(0+" "+n);continue;}
+            boolean ans=false;
+            if(l%2==0){
+                l-=2;
+                if(n%2==0){
+                    for(int k=2;k<10 && !ans;k+=2){
+                        if((n-k)%12==0){
+                            ans=true;
+                            System.out.println((k)+" "+(n-k));
+                            break;
+                        }
+                        if((n-k*11)>=0 && (n-k*11)%12==0){
+                            ans=true;
+                            System.out.println((k*11)+" "+(n-k*11));
+                            break;
+                        }
+                        for(int i=0;i<(int)Math.pow(10,l/2);i++){
+                            long p=n-pl(k,i,false);
+                            if(p<0) break;
+                            if((p)%12==0){
+                                ans=true;
+                                System.out.println((n-p)+" "+p);
+                                break;
+                            }
+                        }
+                    }
+                }
+                else{
+                    for(int k=1;k<10 && !ans;k+=2){
+                        if((n-k)%12==0){
+                            ans=true;
+                            System.out.println((k)+" "+(n-k));
+                            break;
+                        }
+                        if((n-k*11)>=0 && (n-k*11)%12==0){
+                            ans=true;
+                            System.out.println((k*11)+" "+(n-k*11));
+                            break;
+                        }
+                        for(int i=0;i<(int)Math.pow(10,l/2);i++){
+                            long p=n-pl(k,i,false);
+                            if(p<0) break;
+                            if((p)%12==0){
+                                ans=true;
+                                System.out.println((n-p)+" "+p);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            else{
+                l-=2;
+                if(n%2==0){
+                    for(int k=2;k<10 && !ans;k+=2){
+                        if((n-k)%12==0){
+                            ans=true;
+                            System.out.println((k)+" "+(n-k));
+                            break;
+                        }
+                        if((n-k*11)>=0 && (n-k*11)%12==0){
+                            ans=true;
+                            System.out.println((k*11)+" "+(n-k*11));
+                            break;
+                        }
+                        for(int i=0;i<(int)Math.pow(10,l/2+1);i++){
+                            long p=n-pl(k,i,true);
+                            if(p<0) break;
+                            if((p)%12==0){
+                                ans=true;
+                                System.out.println((n-p)+" "+p);
+                                break;
+                            }
+                        }
+                    }
+                }
+                else{
+                    for(int k=1;k<10 && !ans;k+=2){
+                        if((n-k)%12==0){
+                            ans=true;
+                            System.out.println((k)+" "+(n-k));
+                            break;
+                        }
+                        if((n-k*11)>=0 && (n-k*11)%12==0){
+                            ans=true;
+                            System.out.println((k*11)+" "+(n-k*11));
+                            break;
+                        }
+                        for(int i=0;i<(int)Math.pow(10,l/2+1);i++){
+                            long p=n-pl(k,i,true);
+                            if(p<0) break;
+                            if((p)%12==0){
+                                ans=true;
+                                System.out.println((n-p)+" "+p);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            if(!ans) System.out.println(-1);
+        }
+    }
+    private static long pl(int l,int i,boolean l1){
+        String k=String.valueOf(i);
+        k=String.valueOf(l)+k;
+        if(l1){
+            i/=10;
+        }
+        while(i>0){
+            k+=String.valueOf(i%10);
+            i/=10;
+        }
+        k=k+String.valueOf(l);
+        return Long.parseLong(k);
+    }
+
+    public static void Vessels_Heights_and_Two_Versions_Easy() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int h[]=new int[n];
+            for(int i=0;i<n;i++) h[i]=s.nextInt();
+            int ans[]=new int[n];
+            for(int i=0;i<n;i++){
+                ans[i]=0;
+                long a=0L;
+                for(int j=i+1;j<n+i;j++){
+                    int idx=(j+n-1)%n;
+                    a+=ans[j%n]=Math.max(ans[idx],h[idx]);
+                }
+                int k=(i+n-1)%n;
+                int q=h[k];
+                // System.out.print(a+" ");
+                while(ans[k]>h[k]){
+                    q=Math.max(q,h[k]);
+                    a-=ans[k]-q;
+                    //System.out.print(a+" ");
+                    k--;
+                    if(k<0) k=n-1;
+                }
+                System.out.print(a+" ");
+            }
+            System.out.println();
         }
     }
 }
