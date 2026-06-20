@@ -99,6 +99,10 @@ public class contest{
         Tatar_TV_Show(); //B
         Omsk_Programmers(); //C
         Brand_New_Tatar_TV_Show(); //D
+
+        //18/06/2026
+        Destroying_Towers(); //A
+        Duck_Surplus(): //C
     }
 
     public static void Binary_Array_Game() {
@@ -1801,6 +1805,38 @@ public class contest{
             if(c%2==0) {flg=false;}
             if(!flg) System.out.println("YES");
             else System.out.println("NO");
+        }
+    }
+
+    public static void Destroying_Towers() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int min=s.nextInt();
+            long sum=min;
+            while(n-->1){
+                min=Math.min(min,s.nextInt());
+                sum+=min;
+            }
+            System.out.println(sum);
+        }
+    }
+
+    public static void Duck_Surplus() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            long prev=s.nextLong();
+            while(n-->1){
+                int q=s.nextInt();
+                if(q<prev){
+                    prev+=q;
+                }
+                else prev=q;
+            }
+            System.out.println(prev);
         }
     }
 }
