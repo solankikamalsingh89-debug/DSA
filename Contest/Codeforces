@@ -103,6 +103,11 @@ public class contest{
         //18/06/2026
         Destroying_Towers(); //A
         Duck_Surplus(): //C
+
+        //27/06/2026(Div2)
+        Another_Popcount_Problem(); //A
+        AI_Finds_Nothing_Here(); //B
+
     }
 
     public static void Binary_Array_Game() {
@@ -1838,5 +1843,43 @@ public class contest{
             }
             System.out.println(prev);
         }
+    }
+
+    public static void Another_Popcount_Problem() {
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int k=s.nextInt();
+            if(k>=n) System.out.println(n);
+            else{
+                int a=(int)(Math.log(n/k+1)/Math.log(2));
+                System.out.println((int)(k*a+((n-((Math.pow(2,a)-1)*k))/Math.pow(2,a))));
+            }
+        }
+    }
+
+    public static void AI_Finds_Nothing_Here() {
+        int MOD=998244353;
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            long n=s.nextLong();
+            long m=s.nextLong();
+            long c=s.nextLong();
+            long r=s.nextLong();
+            n-=c;
+            m-=r;
+            System.out.println(AI_Finds_Nothing_Here_exp(2,(r*c-1)+(r-1)*n+(c-1)*m,MOD));
+        }
+    }
+    private static long AI_Finds_Nothing_Here_exp(long b, long e, int MOD){
+        long res=1L;
+        while(e>0){
+            if((e&1)==1) res=(res*b)%MOD;
+            b=(b*b)%MOD;
+            e>>=1;
+        }
+        return res;
     }
 }
