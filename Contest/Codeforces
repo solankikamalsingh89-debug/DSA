@@ -118,6 +118,11 @@ public class contest{
         Good_times_Good_times(); //B
         RemovevomeR(); //C
         An_alternative_Way(); //D
+
+        //06/07/2026(Div2)
+        Bigrams(); //A
+        Predominant_frequency_division(); //B
+        Unstable_elements(); //C
     }
 
     public static void Binary_Array_Game() {
@@ -2077,6 +2082,88 @@ public class contest{
             }
             if(a[0]>b[0]) System.out.println("NO");
             else System.out.println("YES");
+        }
+    }
+
+    public static void Bigrams(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            boolean m3=false;
+            int m2=0;
+            for(int i=0;i<n;i++){
+                int q=s.nextInt();
+                if(q>=3) m3=true;
+                else if(q==2) m2++;
+            }
+            if(m3 || m2>1) System.out.println("YES");
+            else System.out.println("NO");
+        }
+    }
+
+    public static void Predominant_frequency_division(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int cur=1;
+            int lesscur=0;
+            int greatcur=0;
+            int a[]=new int[n];
+            for(int i=0;i<n;i++) a[i]=s.nextInt();
+            int i=0;
+            for(;i<n && cur<3;i++){
+                int q=a[i];
+                if(q>cur) greatcur++;
+                else lesscur++;
+                if(lesscur>=greatcur) {
+                    if(cur==1){
+                        i++;
+                        while(i<n && a[i]==3 && lesscur>=greatcur){i++; greatcur++;}
+                        i--;
+                        cur++;
+                    }
+                    else break;
+                }
+            }
+            if(i<n-1) System.out.println("YES");
+            else System.out.println("NO");
+        }
+    }
+
+    public static void Unstable_elements(){
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int n=s.nextInt();
+            int k=s.nextInt();
+            int freq[]=new int [n+1];
+            int total=0;
+            for(int i=1;i<=n;i++){
+                if(++freq[s.nextInt()]==1) total++;
+            }
+            int[] freq1=new int[n+1];
+            for(int i:freq){
+                freq1[i]++;
+            }
+            // for(int i=0;i<=n;i++) System.out.print(freq1[i]+" ");
+            // System.out.println();
+            int ans=0;
+            for(int i=1;n>0;i++){
+                if(freq1[i]!=0){
+                    int d=n-(total*(i-1));
+                    // System.out.println(n);
+                    if(d<=k && (k-d)%total==0){
+                        ans++;
+                        //System.out.println(ans+" "+n);
+                    }
+                    n-=(i*freq1[i]);
+                    total-=freq1[i];
+                    // System.out.println(d);
+                }
+            }
+            System.out.println(ans);
         }
     }
 }
