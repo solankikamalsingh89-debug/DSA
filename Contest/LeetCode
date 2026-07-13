@@ -765,4 +765,61 @@ class Solution {
         }
         return sum;
     }
+
+    //20/06/2026
+    //Create Grid With Exactly One Path(Python)
+    def createGrid(self, m: int, n: int) -> list[str]:
+        ans=[]
+        ans.append('.'*n)
+        for i in range(1,m):
+            ans.append('#'*(n-1)+'.')
+        return ans
+
+    //Minimum Lights to Illuminate a Road
+    public int minLights(int[] lights) {
+        int l=lights.length;
+        ArrayList<Integer[]> il=new ArrayList<>();
+        for(int i=0;i<l;i++){
+            if(lights[i]!=0) il.add(new Integer[]{Math.max(0,i-lights[i]),Math.min(l-1,i+lights[i])});
+        }
+        il.sort((a, b) -> Integer.compare(a[0], b[0]));
+        if(il.size()==0) return (l+2)/3;
+        int min=il.get(0)[0];
+        int max=il.get(0)[1];
+        int ans=(min+2)/3;
+        for(int i=1;i<il.size();i++){
+            int v=il.get(i)[0];
+            if(v>max+1){
+                ans+=(v-max+1)/3;
+                min=v;
+            }
+            max=Math.max(max, max=il.get(i)[1]);
+        }
+        ans+=(l-max+1)/3;
+        return ans;
+    }
+
+    //Finish Time of Tasks I
+    public long finishTime(int n, int[][] edges, int[] baseTime) {
+        ArrayList<Integer>[] child=new ArrayList[n]; //Stores parent of idx node
+        for(int i=0;i<n;i++){
+            child[i]=new ArrayList<>();
+        }
+        for(int[] i:edges){
+            child[i[0]].add(i[1]);
+        }
+        return finishTime_helper(child,0,baseTime);
+    }
+    private long finishTime_helper(ArrayList<Integer>[] child, int id, int[] time){
+        int l=child[id].size();
+        if(l==0) return time[id];
+        long minT=f(child, child[id].get(0), time);
+        long maxT=minT;
+        for(int i=1;i<l;i++){
+            long v=f(child, child[id].get(i), time);
+            minT=Math.min(v,minT);
+            maxT=Math.max(v,maxT);
+        }
+        return (2*maxT-minT+time[id]);
+    }
 }
