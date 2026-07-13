@@ -951,4 +951,37 @@ class Solution {
         }
         return chng==n1;
     }
+
+    //12/07/2026
+    //Number of Elapsed Seconds Between Two Times
+    public int secondsBetweenTimes(String startTime, String endTime) {
+        return Math.abs(((startTime.charAt(0)-'0')*10+startTime.charAt(1)-'0')*3600+((startTime.charAt(3)-'0')*10+startTime.charAt(4)-'0')*60+(startTime.charAt(6)-'0')*10+startTime.charAt(7)-'0'-(((endTime.charAt(0)-'0')*10+endTime.charAt(1)-'0')*3600+((endTime.charAt(3)-'0')*10+endTime.charAt(4)-'0')*60+(endTime.charAt(6)-'0')*10+endTime.charAt(7)-'0'));
+    }
+
+    //Minimum Total Cost to Process All Elements
+    public int minimumCost(int[] nums, int k) {
+        long chn=0;
+        long resource=k;
+        for(int i:nums){
+            if(i>resource){
+                long t=(i-resource+k-1)/k;
+                chn+=t;
+                resource +=t*k;
+            }
+            resource-=i;
+        }
+        return minimumCost_h(chn);
+    }
+    private int minimumCost_h(long t){
+        long c=0;
+        if(t%2==0){
+            c=(t/2)%1000000007;
+            c*=(t+1)%1000000007;
+        }
+        else{
+            c=((t+1)/2)%1000000007;
+            c*=(t)%1000000007;
+        }
+        return (int)(c%1000000007);
+    }
 }
