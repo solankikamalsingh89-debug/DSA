@@ -822,4 +822,36 @@ class Solution {
         }
         return (2*maxT-minT+time[id]);
     }
+
+    //21/06/2026
+    //Maximum Manhattan Distance After All Moves
+    public int maxDistance(String moves) {
+        int u1=0, u2=0, u=0;
+        for(int i=0;i<moves.length();i++){
+            char q=moves.charAt(i);
+            if(q=='L') u1++;
+            else if(q=='R') u1--;
+            else if(q=='U') u2++;
+            else if(q=='D') u2--;
+            else u++;
+        }
+        return u+Math.abs(u1)+Math.abs(u2);
+    }
+
+    //Valid Subarrays With Matching Sum Digits I
+    public int countValidSubarrays(int[] nums, int x) {
+        int l=nums.length;
+        long prefix[]=new long[l+1];
+        int ans=0;
+        for(int i=1;i<=l;i++){
+            prefix[i]=prefix[i-1]+nums[i-1];
+        }
+        for(int i=0;i<l;i++){
+            for(int j=i+1;j<=l;j++){
+                long s=prefix[j]-prefix[i];
+                if(s%10==x && s/(long)(Math.pow(10,(int)(Math.log10(s))))==x) ans++;
+            }
+        }
+        return ans;
+    }
 }
