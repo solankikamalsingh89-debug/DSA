@@ -46,6 +46,11 @@ class Codechef{
         //01/07/2026(Div4)
         cooling_conundrum(); //1
         favorite_words(); //2
+        //08/07/2026(Div4)
+        point_calculation(); //1
+        plant(); //2
+        red_yellow_cards(); //3
+        waiting_easy(); //4
 	}
 
     public static void front_back_matching(){
@@ -768,5 +773,60 @@ class Codechef{
         else System.out.println("NO");
 	}
 
-    
+    public static void point_calculation () throws java.lang.Exception
+	{
+		// your code goes here
+        Scanner s=new Scanner(System.in);
+        System.out.println(3*(s.nextInt())+s.nextInt()+0*(s.nextInt()));
+	}
+
+    public static void plant() throws java.lang.Exception
+	{
+		Scanner s=new Scanner(System.in);
+		int t=s.nextInt();
+		while(t-->0){
+		    int n=s.nextInt();
+		    int a=s.nextInt();
+		    int ans=0;
+		    while(n-->1){
+		        int b=s.nextInt();
+		        ans=Math.max(ans,(Math.min(a,b)));
+		        a=b;
+		    }
+		    System.out.println(ans);
+		}
+	}
+
+    public static void red_yellow_cards() throws java.lang.Exception
+	{
+	    Scanner s=new Scanner(System.in);
+		int t=s.nextInt();
+		while(t-->0){
+		    int r=s.nextInt();
+		    int y=s.nextInt();
+		    System.out.println(r+(Math.max(0,y-r))/2);
+		}
+	}
+
+    public static void waiting_easy() throws java.lang.Exception
+	{
+		Scanner s=new Scanner(System.in);
+		int t=s.nextInt();
+		while(t-->0){
+		    int n=s.nextInt();
+		    int a[]=new int[n];
+		    for(int i=0;i<n;i++) a[i]=s.nextInt();
+		    int mx=a[0];
+		    long ans=0;
+		    for(int i=1;i<n;i++){
+		        if(mx<=a[i]){
+		            mx=a[i];
+		        }
+		        else{
+		            ans+=mx-a[i];
+		        }
+		    }
+		    System.out.println(ans);
+		}
+	}
 }
