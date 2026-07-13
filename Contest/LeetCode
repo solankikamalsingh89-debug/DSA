@@ -908,5 +908,47 @@ class Solution {
         return ans;
     }
 
-    
+    //05/07/2026
+    //Sum of Integers with Maximum Digit Range
+    public int maxDigitRange(int[] nums) {
+        int n=nums.length;
+        int m=0;
+        int ans=0;
+        int dr[]=new int[n];
+        for(int i=0;i<n;i++){
+            dr[i]=maxDigitRange_ra(nums[i]);
+            m=Math.max(m,dr[i]);
+        }
+        for(int i=0;i<n;i++){
+            if(dr[i]==m) ans+=nums[i];
+        }
+        return ans;
+    }
+    private int maxDigitRange_ra(int n){
+        int mi=9,ma=0;
+        while(n>0){
+            int q=n%10;
+            mi=Math.min(mi,q);
+            ma=Math.max(ma,q);
+            n/=10;
+        }
+        return ma-mi;
+    }
+
+    //Subsequence After One Replacement
+    public boolean canMakeSubsequence(String s, String t) {
+        int n1=s.length();
+        int n2=t.length();
+        if(n1==1) return true;
+        if(n1>n2) return false;
+        int chng=0, nonchng=0;
+        for(int i=0;i<n2 && chng<n1;i++){
+            if(t.charAt(i)==s.charAt(chng)) chng++;
+            chng=Math.max(chng, nonchng+1);
+            if(t.charAt(i)==s.charAt(nonchng)){
+                nonchng++;
+            }
+        }
+        return chng==n1;
+    }
 }
