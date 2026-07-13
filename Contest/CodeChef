@@ -43,6 +43,9 @@ class Codechef{
         Interseting_Match(); //1
         Lose_less(); //2
         Starved_for_Seating(); //3
+        //01/07/2026(Div4)
+        cooling_conundrum(); //1
+        favorite_words(); //2
 	}
 
     public static void front_back_matching(){
@@ -738,4 +741,32 @@ class Codechef{
             }
         }
 	}
+
+    public static void cooling_conundrum() throws java.lang.Exception
+	{
+		// your code goes here
+        Scanner s=new Scanner(System.in);
+        int t=s.nextInt();
+        while(t-->0){
+            int x=s.nextInt();
+            int y=s.nextInt();
+            long ans=0L;
+            while(x!=y){
+                ans+=(x+9)/10;
+                x--;
+            }
+            System.out.println(ans);
+        }
+	}
+
+    public static void favorite_words() throws java.lang.Exception
+	{
+		// your code goes here
+        Scanner s=new Scanner(System.in);
+        String q=s.next();
+        if(q.charAt(0)=='c' || q.charAt(3)=='f') System.out.println("YES");
+        else System.out.println("NO");
+	}
+
+    
 }
